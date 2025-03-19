@@ -1,0 +1,49 @@
+.container-widget{
+    max-width: 350px;
+    margin:0px 20px 20px 20px;
+}
+.timeline-with-icons {
+    border-left: 1px solid hsl(0, 0%, 90%);
+    position: relative;
+    list-style: none;
+    font-family:"Quicksand",sans-serif;
+}
+
+.timeline-with-icons .timeline-item {
+    position: relative;
+}
+
+.timeline-with-icons .timeline-item:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+.timeline-with-icons .timeline-icon {
+    position: absolute;
+    left: -48px;
+    background-color: hsl(217, 88.2%, 90%);
+    color: rgba(72, 134, 233,0.6);
+    border-radius: 50%;
+    height: 31px;
+    width: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+li span svg {
+    position: relative;
+    width: auto;
+    height: 10vh;
+     
+     
+}
+.dashed-circle {
+    position: absolute;
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    border: 2px dashed rgba(132, 159, 247,0.6);
+     
+  }
