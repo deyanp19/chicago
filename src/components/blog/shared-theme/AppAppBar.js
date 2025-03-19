@@ -51,8 +51,12 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
-            <Sitemark />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {/* <Sitemark />  */}
+            <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
+              {'Chicagotours © '}
+            </Box>
+            {/* Deyan - the component Sitemark is svg that every letter is path. Use this later to create your own , maybe make youtube video about it */}
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
                 Features
               </Button>
@@ -71,7 +75,7 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
                 Blog
               </Button>
-            </Box>
+            </Box> */}
           </Box>
           <Box
             sx={{
@@ -80,12 +84,12 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Button color="primary" variant="text" size="small">
+            {/* <Button color="primary" variant="text" size="small">
               Sign in
             </Button>
             <Button color="primary" variant="contained" size="small">
               Sign up
-            </Button>
+            </Button> */}
             <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
