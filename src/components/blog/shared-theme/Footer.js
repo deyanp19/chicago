@@ -9,7 +9,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import FacebookIcon from '@mui/icons-material/GitHub';
+import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
 import SitemarkIcon from './SitemarkIcon';
@@ -58,7 +58,10 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              <SitemarkIcon />
+              {/* <SitemarkIcon /> */}
+              <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
+              {'Chicagotours © '}
+            </Box>
               <Typography
                 variant="body2"
                 gutterBottom
@@ -106,23 +109,16 @@ export default function Footer() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-              Product
+              Links to:
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
-              Features
+            <Link color="text.secondary" variant="body2" href="https://www.architecture.org/city-tours">
+              Architectural Tour Official
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Testimonials
+            <Link color="text.secondary" variant="body2" href="https://www.chicago.gov/city/en.html">
+              City of Chicago Official
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Highlights
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Pricing
-            </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              FAQs
-            </Link>
+
+         
           </Box>
           <Box
             sx={{
@@ -132,16 +128,16 @@ export default function Footer() {
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-              Company
+              FAQs
             </Typography>
-            <Link color="text.secondary" variant="body2" href="#">
-              About us
+            <Link color="text.secondary" variant="body2" href="https://theskydeck.com/chicago-airports/">
+              Airports
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Careers
+            <Link color="text.secondary" variant="body2" href="https://www.chicagoriver.org/">
+              Chicago River
             </Link>
-            <Link color="text.secondary" variant="body2" href="#">
-              Press
+            <Link color="text.secondary" variant="body2" href="https://www.themagnificentmile.com/">
+              Magnificent Mile
             </Link>
           </Box>
           <Box
@@ -211,7 +207,7 @@ export default function Footer() {
             >
               <TwitterIcon />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               color="inherit"
               size="small"
               href="https://www.linkedin.com/company/mui/"
@@ -219,7 +215,7 @@ export default function Footer() {
               sx={{ alignSelf: 'center' }}
             >
               <LinkedInIcon />
-            </IconButton>
+            </IconButton> */}
           </Stack>
         </Box>
       </Container>
