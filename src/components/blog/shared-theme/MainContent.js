@@ -16,6 +16,9 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
+import { Collapse } from '@mui/material';
+import { useState } from 'react';
+
 
 const cardData = [
   {
@@ -23,13 +26,23 @@ const cardData = [
     tag: 'Beautiful Skyline',
     title: 'The city with 110 neighbourhoods',
     description:
-      'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.',
+      'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
     authors: [
-      { name: 'Remy Sharp', avatar: '/static/images/avatar/1.jpg' },
-      { name: 'Travis Howard', avatar: '/static/images/avatar/2.jpg' },
+      { name: 'D Petrov', avatar: '/static/images/avatar/1.jpg' },
     ],
   }
 ];
+
+const StyledCardContent = styled(CardContent)({
+  paddingBottom: "16px",
+});
+
+const StyledCard = styled(Card)({
+  transition: "0.3s",
+  cursor: "pointer",
+});
+
+
 
 const SyledCard = styled(Card)(({ theme }) => ({
   display: 'flex',
@@ -96,7 +109,7 @@ function Author({ authors }) {
           {authors.map((author) => author.name).join(', ')}
         </Typography>
       </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
+      <Typography variant="caption">March 14, 2025</Typography>
     </Box>
   );
 }
@@ -133,7 +146,12 @@ export function Search() {
 
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
-
+  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(true);
+ 
+  const handleToggle = () => {
+    setExpanded((prev) => !prev);
+  };
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
   };
@@ -150,7 +168,7 @@ export default function MainContent() {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <div>
         <Typography variant="h1" gutterBottom>
-          Chicagotours
+          Chicago tours
         </Typography>
         <Typography>Welcome to the city of Chicago. Here is some information about the city.</Typography>
       </div>
@@ -187,7 +205,7 @@ export default function MainContent() {
             overflow: 'auto',
           }}
         >
-          <Chip onClick={handleClick} size="medium" label="All categories" />
+          {/* <Chip onClick={handleClick} size="medium" label="All categories" /> */}
           {/* <Chip
             onClick={handleClick}
             size="medium"
@@ -242,7 +260,7 @@ export default function MainContent() {
       </Box>
       <Grid container spacing={2} columns={12}>
         <Grid size={{ xs: 12, md: 6 }}>
-          <SyledCard
+          {/* <SyledCard
             variant="outlined"
             onFocus={() => handleFocus(0)}
             onBlur={handleBlur}
@@ -252,7 +270,7 @@ export default function MainContent() {
             <CardMedia
               component="img"
               alt="green iguana"
-              image={cardData[0].img}
+              image='/images/chicago_skyline_hancock.gif'
               sx={{
                 aspectRatio: '16 / 9',
                 borderBottom: '1px solid',
@@ -269,9 +287,50 @@ export default function MainContent() {
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
                 {cardData[0].description}
               </StyledTypography>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <StyledTypography variant="body2" color="text.secondary">
+                  The John Hancock Center is a 100-story skyscraper in Chicago, Illinois, offering stunning views of the city skyline and Lake Michigan.
+                </StyledTypography>
+              </CardContent>
+            </Collapse>
+
             </SyledCardContent>
             <Author authors={cardData[0].authors} />
-          </SyledCard>
+          </SyledCard> */}
+    <StyledCard variant="outlined" onClick={handleToggle}>
+      {/* Collapsible Image */}
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardMedia
+          component="img"
+          alt="Chicago Skyline"
+          image="/images/chicago_skyline_hancock.gif"
+          sx={{
+            aspectRatio: "16 / 9",
+            borderBottom: "1px solid",
+            borderColor: "divider",
+          }}
+        />
+      </Collapse>
+
+      {/* Card Content */}
+      <StyledCardContent>
+        <Typography gutterBottom variant="caption" component="div">
+          {cardData[0]?.tag}
+        </Typography>
+        <Typography gutterBottom variant="h6" component="div">
+          {cardData[0]?.title}
+        </Typography>
+        <StyledTypography variant="body2" color="text.secondary" gutterBottom>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          {cardData[0]?.description}
+        </Collapse>
+        </StyledTypography>
+      </StyledCardContent>
+
+      {/* Author Section */}
+      <Author authors={cardData[0]?.authors} />
+    </StyledCard>
         </Grid>
         {/* <Grid size={{ xs: 12, md: 6 }}>
           <SyledCard
