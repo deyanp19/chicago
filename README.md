@@ -1,6 +1,3 @@
-<img src="./public/images/Presentation.png"
-     alt="Screenshot of Payarc Dashboard"
-     style="float: left; margin-right: 10px;" height="240px" width="320px" />
 
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
@@ -32,8 +29,5 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deployed Version on Vercel
-Suitable for desktops;  not optimized for mobile
+## Deployed on chicagotours.site
 
-
-https://dashboard-parc-kain.vercel.app/training
