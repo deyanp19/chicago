@@ -44,7 +44,8 @@ export default function AppAppBar() {
       sx={{
         boxShadow: 0,
         bgcolor: 'transparent',
-        backgroundImage: 'none',
+        backgroundImage: 'url(/images/chicago_skyline_hancock.gif)',
+        backgroundPosition: 'center',
         mt: 'calc(var(--template-frame-height, 0px) + 28px)',
       }}
     >
