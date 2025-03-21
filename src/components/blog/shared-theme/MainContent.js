@@ -18,18 +18,43 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
 import { Collapse } from '@mui/material';
 import { useState } from 'react';
-
+import Link from '@mui/material/Link';
 
 const cardData = [
   {
-    img: 'https://picsum.photos/800/450?random=chicago',
+    image:'/images/chicago_skyline_hancock.gif',
     tag: 'Beautiful Skyline',
     title: 'The city with 110 neighbourhoods',
     description:
       'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
     authors: [
-      { name: 'D Petrov', avatar: '/static/images/avatar/1.jpg' },
+      { name: 'D Yordanov', avatar: '/static/images/avatar/1.jpg' ,time:'March 14, 2025'},
     ],
+  },
+  {
+    image:'/images/24hours_sign.gif',
+    tag: 'Bars',
+    title: 'Bars',
+    description:
+    `Here are five popular bars in Chicago that are great for sightseeing while enjoying a drink: \n 1. **The Signature Lounge at the 95th**  
+Located on the 95th floor of the John Hancock Center, this bar offers breathtaking panoramic views of the city skyline, Lake Michigan, and beyond.
+
+2. **Cindy's Rooftop**  
+With stunning views of Millennium Park and the Art Institute of Chicago, Cindy's Rooftop serves craft cocktails while providing a scenic perspective of the city's downtown area.
+
+3. **The Aviary**  
+This upscale bar in the West Loop not only offers innovative drinks but also provides a great view of the surrounding neighborhood, adding to its vibrant atmosphere.
+
+4. **The Roof at The Wit**  
+This rooftop bar features spectacular views of the Chicago skyline, ideal for a drink while taking in the city’s architectural beauty.
+
+5. **Chicago Riverwalk Bars**  
+Located along the scenic Chicago Riverwalk, these bars offer a relaxed atmosphere and excellent views of the river and iconic bridges, perfect for a day or evening of sightseeing.
+    `,
+    authors: [
+      { name: 'D Petrov', avatar: '/static/images/avatar/1.jpg' ,time:'March 18, 2025'},
+    ],
+
   }
 ];
 
@@ -40,6 +65,7 @@ const StyledCardContent = styled(CardContent)({
 const StyledCard = styled(Card)({
   transition: "0.3s",
   cursor: "pointer",
+  margin: "12px"
 });
 
 
@@ -109,7 +135,7 @@ function Author({ authors }) {
           {authors.map((author) => author.name).join(', ')}
         </Typography>
       </Box>
-      <Typography variant="caption">March 14, 2025</Typography>
+      <Typography variant="caption">{authors.map(author=>author.time)}</Typography>
     </Box>
   );
 }
@@ -146,11 +172,13 @@ export function Search() {
 
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
-  const [expanded, setExpanded] = useState(false);
-  // const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState({});
  
-  const handleToggle = () => {
-    setExpanded((prev) => !prev);
+  const handleToggle = (index) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
   };
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
@@ -168,9 +196,9 @@ export default function MainContent() {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
       <div>
         <Typography variant="h1" gutterBottom>
-          Chicago tours
+          Chicago Tours
         </Typography>
-        <Typography>Welcome to the city of Chicago. Here is some information about the city.</Typography>
+        <Typography variant='h3'>Welcome to the city of Chicago. Here is some information about the city.</Typography>
       </div>
       <Box
         sx={{
@@ -183,7 +211,7 @@ export default function MainContent() {
       >
         <Search />
         <IconButton size="small" aria-label="RSS feed">
-          <RssFeedRoundedIcon />
+          {/* <RssFeedRoundedIcon /> */}
         </IconButton>
       </Box>
       <Box
@@ -205,6 +233,8 @@ export default function MainContent() {
             overflow: 'auto',
           }}
         >
+              {/* Below is beautifullTAB PAGES do add it when needed. DO NOT DELETE */}
+ 
           {/* <Chip onClick={handleClick} size="medium" label="All categories" /> */}
           {/* <Chip
             onClick={handleClick}
@@ -215,35 +245,11 @@ export default function MainContent() {
               border: 'none',
             }}
           />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Product"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Design"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Engineering"
-            sx={{
-              backgroundColor: 'transparent',
-              border: 'none',
-            }}
+
           /> */}
         </Box>
-        <Box
+         {/* Below is beautifull search do add it when needed. DO NOT DELETE */}
+        {/* <Box
           sx={{
             display: { xs: 'none', sm: 'flex' },
             flexDirection: 'row',
@@ -256,252 +262,69 @@ export default function MainContent() {
           <IconButton size="small" aria-label="RSS feed">
             <RssFeedRoundedIcon />
           </IconButton>
-        </Box>
+        </Box> */}
       </Box>
-      <Grid container spacing={2} columns={12}>
+      <Grid container spacing={3} columns={12}>
         <Grid size={{ xs: 12, md: 6 }}>
-          {/* <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(0)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image='/images/chicago_skyline_hancock.gif'
-              sx={{
-                aspectRatio: '16 / 9',
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[0].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[0].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[0].description}
-              </StyledTypography>
-              <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                <StyledTypography variant="body2" color="text.secondary">
-                  The John Hancock Center is a 100-story skyscraper in Chicago, Illinois, offering stunning views of the city skyline and Lake Michigan.
-                </StyledTypography>
-              </CardContent>
-            </Collapse>
 
-            </SyledCardContent>
-            <Author authors={cardData[0].authors} />
-          </SyledCard> */}
-    <StyledCard variant="outlined" onClick={handleToggle}>
-      {/* Collapsible Image */}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardMedia
-          component="img"
-          alt="Chicago Skyline"
-          image="/images/chicago_skyline_hancock.gif"
-          sx={{
-            aspectRatio: "16 / 9",
-            borderBottom: "1px solid",
-            borderColor: "divider",
-          }}
-        />
-      </Collapse>
+    {cardData?.map((card,index) => (
+      <StyledCard 
+      
+          variant="outlined" 
+          onClick={()=>handleToggle(index)}
+          ariant="outlined"
+          onFocus={() => handleFocus(1)}
+          onBlur={handleBlur}
+          tabIndex={0}
+          className={focusedCardIndex === 1 ? 'Mui-focused' : ''}
+          >
+            {/* Collapsible Image */}
+            <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
+              <CardMedia
+                component="img"
+                alt="Chicago Skyline"
+                image={cardData[index].image}
+                sx={{
+                  aspectRatio: "16 / 9",
+                  borderBottom: "1px solid",
+                  borderColor: "divider",
+                }}
+              />
+            </Collapse>
 
       {/* Card Content */}
       <StyledCardContent>
         <Typography gutterBottom variant="caption" component="div">
-          {cardData[0]?.tag}
+          {cardData[index]?.tag}
         </Typography>
         <Typography gutterBottom variant="h6" component="div">
-          {cardData[0]?.title}
+          {cardData[index]?.title}
         </Typography>
         <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          {cardData[0]?.description}
+        <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
+          {cardData[index]?.description.split("\n").map(x=>{
+            const item= x
+            return (
+              <ol>
+              {x}
+              </ol>
+            )
+          })}
         </Collapse>
         </StyledTypography>
       </StyledCardContent>
 
       {/* Author Section */}
-      <Author authors={cardData[0]?.authors} />
-    </StyledCard>
+      <Author authors={cardData[index]?.authors} />
+      </StyledCard>
+    )
+
+    )
+      
+    }
+   
         </Grid>
-        {/* <Grid size={{ xs: 12, md: 6 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(1)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 1 ? 'Mui-focused' : ''}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[1].img}
-              aspect-ratio="16 / 9"
-              sx={{
-                borderBottom: '1px solid',
-                borderColor: 'divider',
-              }}
-            />  
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[1].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[1].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[1].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[1].authors} />
-          </SyledCard>
-        </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(2)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 2 ? 'Mui-focused' : ''}
-            sx={{ height: '100%' }}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[2].img}
-              sx={{
-                height: { sm: 'auto', md: '50%' },
-                aspectRatio: { sm: '16 / 9', md: '' },
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[2].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[2].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[2].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[2].authors} />
-          </SyledCard>
-        </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Box
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}
-          >
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(3)}
-              onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 3 ? 'Mui-focused' : ''}
-              sx={{ height: '100%' }}
-            >
-              <SyledCardContent
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '100%',
-                }}
-              >
-                <div>
-                  <Typography gutterBottom variant="caption" component="div">
-                    {cardData[3].tag}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {cardData[3].title}
-                  </Typography>
-                  <StyledTypography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {cardData[3].description}
-                  </StyledTypography>
-                </div>
-              </SyledCardContent>
-              <Author authors={cardData[3].authors} />
-            </SyledCard>
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(4)}
-              onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 4 ? 'Mui-focused' : ''}
-              sx={{ height: '100%' }}
-            >
-              <SyledCardContent
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  height: '100%',
-                }}
-              >
-                <div>
-                  <Typography gutterBottom variant="caption" component="div">
-                    {cardData[4].tag}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" component="div">
-                    {cardData[4].title}
-                  </Typography>
-                  <StyledTypography
-                    variant="body2"
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    {cardData[4].description}
-                  </StyledTypography>
-                </div>
-              </SyledCardContent>
-              <Author authors={cardData[4].authors} />
-            </SyledCard>
-          </Box>
-        </Grid>
-        <Grid size={{ xs: 12, md: 4 }}>
-          <SyledCard
-            variant="outlined"
-            onFocus={() => handleFocus(5)}
-            onBlur={handleBlur}
-            tabIndex={0}
-            className={focusedCardIndex === 5 ? 'Mui-focused' : ''}
-            sx={{ height: '100%' }}
-          >
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              image={cardData[5].img}
-              sx={{
-                height: { sm: 'auto', md: '50%' },
-                aspectRatio: { sm: '16 / 9', md: '' },
-              }}
-            />
-            <SyledCardContent>
-              <Typography gutterBottom variant="caption" component="div">
-                {cardData[5].tag}
-              </Typography>
-              <Typography gutterBottom variant="h6" component="div">
-                {cardData[5].title}
-              </Typography>
-              <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {cardData[5].description}
-              </StyledTypography>
-            </SyledCardContent>
-            <Author authors={cardData[5].authors} />
-          </SyledCard>
-        </Grid> */}
+        
       </Grid>
     </Box>
   );
