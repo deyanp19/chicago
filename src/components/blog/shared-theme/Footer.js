@@ -62,7 +62,8 @@ export default function Footer() {
               <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
               {'Chicagotours © '}
             </Box>
-              <Typography
+                {/* Below is beautifull CALL TO ACTION SUBSCRIBE EMAIL add it when needed. DO NOT DELETE */}
+              {/* <Typography
                 variant="body2"
                 gutterBottom
                 sx={{ fontWeight: 600, mt: 2 }}
@@ -98,7 +99,7 @@ export default function Footer() {
                 >
                   Subscribe
                 </Button>
-              </Stack>
+              </Stack> */}
             </Box>
           </Box>
           <Box
