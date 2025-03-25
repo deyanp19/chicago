@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '@/components/blog/shared-theme/ColorModeIconDropdown';
 import Sitemark from './SitemarkIcon';
+import Chicagotours from './Chicagotours';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -45,17 +46,19 @@ export default function AppAppBar() {
         boxShadow: 0,
         bgcolor: 'transparent',
         backgroundImage: 'url(/images/chicago_skyline_hancock.gif)',
-        backgroundPosition: 'center',
-        mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+       
+        backgroundPosition: 'center top 520px',
+        mt: 'calc(var(--template-frame-height, 0px) + 18px)',
       }}
     >
       <Container maxWidth="lg">
-        <StyledToolbar variant="dense" disableGutters>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
+        <StyledToolbar variant="dense" disableGutters sx={{ backdropFilter: "blur(3px)"}}  >
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}  >
             {/* <Sitemark />  */}
-            <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
+            <Chicagotours  style={{ width: '100%'}} />
+            {/* <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
               {'Chicagotours © '}
-            </Box>
+            </Box> */}
             {/* Deyan - the component Sitemark is svg that every letter is path. Use this later to create your own , maybe make youtube video about it */}
             {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
