@@ -264,12 +264,14 @@ export default function MainContent() {
           </IconButton>
         </Box> */}
       </Box>
-      <Grid container spacing={3} columns={12}>
-        <Grid size={{ xs: 12, md: 6 }}>
+      <Grid container spacing={2} columns={12}>
+        <Grid size={{ xs: 12, md: 6 }} 
+          style={{ width: '100%'}}
+        
+        >
 
     {cardData?.map((card,index) => (
       <StyledCard 
-      
           variant="outlined" 
           onClick={()=>handleToggle(index)}
           ariant="outlined"
