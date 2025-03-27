@@ -24,7 +24,7 @@ const cardData = [
   {
     image:'/images/chicago_skyline_hancock.gif',
     tag: 'Beautiful Skyline',
-    title: 'The city with 110 neighbourhoods',
+    title: 'The city with 178 neighbourhoods',
     description:
       'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
     authors: [
