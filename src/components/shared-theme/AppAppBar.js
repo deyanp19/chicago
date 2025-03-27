@@ -56,7 +56,9 @@ export default function AppAppBar() {
         <StyledToolbar variant="dense" disableGutters sx={{ backdropFilter: "blur(3px)"}}  >
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}  >
             {/* <Sitemark />  */}
-            <Chicagotours  style={{ width: '100%'}} />
+            <Link href='/'>
+              <Chicagotours  style={{ width: '100%'}} />
+            </Link>
             {/* <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
               {'Chicagotours © '}
             </Box> */}
