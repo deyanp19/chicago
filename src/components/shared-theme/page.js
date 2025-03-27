@@ -4,7 +4,7 @@ import Clock from "@/components/clock/Clock";
 import Jumbotron from "@/components/jumbotron/Jumbotron";
 import Witget from "@/components/progressSteps/Witget";
 import Sidebar from "@/components/sidebar/Sidebar";
-import SidebarSubmenu from "../../sidebar/SidebarSubmenu";
+import SidebarSubmenu from "../sidebar/SidebarSubmenu";
 
 
 export default function Dashboard() {
