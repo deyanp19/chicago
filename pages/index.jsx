@@ -1,5 +1,5 @@
 
-import Home from '@/components/blog/shared-theme/page';
+import Home from '@/components/shared-theme/page';
 import Blog from './blog/Blog';
 
 
