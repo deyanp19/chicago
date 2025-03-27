@@ -11,9 +11,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ColorModeIconDropdown from '@/components/blog/shared-theme/ColorModeIconDropdown';
+import ColorModeIconDropdown from '@/components/shared-theme/ColorModeIconDropdown';
 import Sitemark from './SitemarkIcon';
 import Chicagotours from './Chicagotours';
+import Link from 'next/link'
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -88,12 +89,16 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            {/* <Button color="primary" variant="text" size="small">
+            <Link href='/sign-in'>
+            <Button color="primary" variant="text" size="small" >
               Sign in
             </Button>
-            <Button color="primary" variant="contained" size="small">
+            </Link>
+            <Link href="/sign-up">
+            <Button color="primary" variant="contained" size="small" >
               Sign up
-            </Button> */}
+            </Button>
+            </Link>
             <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>

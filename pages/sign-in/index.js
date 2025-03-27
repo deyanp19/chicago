@@ -6,23 +6,21 @@ import AppAppBar from '@/components/shared-theme/AppAppBar';
 import MainContent from '@/components/shared-theme/MainContent';
 import Latest from '@/components/shared-theme/Latest';
 import Footer from '@/components/shared-theme/Footer';
+import SignIn from '@/components/sign-in/SignIn';
 
 export default function Blog(props) {
-    return (
-      <AppTheme {...props}>
-        <CssBaseline enableColorScheme />
-        <AppAppBar />
-        <Container
-          maxWidth="lg"
-          component="main"
-          sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
-        >
-            <h3>This is not present page</h3>
-          {/* <MainContent /> */}
-          {/* <Latest /> */}
-        </Container>
-        <Footer />
-      </AppTheme>
-    );
-  }
-  
+  return (
+    <AppTheme {...props}>
+      <CssBaseline enableColorScheme />
+      <AppAppBar />
+      <Container
+        maxWidth="lg"
+        component="main"
+        sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
+      >
+      <SignIn />
+      </Container>
+      <Footer />
+    </AppTheme>
+  );
+}
