@@ -18,6 +18,9 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours';
+import requestMethods from '../../../requrests/requestMethods';
+import { useRouter } from "next/router";
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -68,6 +71,7 @@ export default function SignIn(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
+  const router = useRouter();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -77,14 +81,17 @@ export default function SignIn(props) {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     if (emailError || passwordError) {
-      event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log({
+    requestMethods.postRequest({
       email: data.get('email'),
       password: data.get('password'),
+    },'/auth').then(()=>{
+     
+      router.push('/marketing')
     });
   };
 
@@ -183,8 +190,12 @@ export default function SignIn(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
-            >
+              onClick={ function () {
+
+                validateInputs();
+
+              }
+              }>
               Sign in
             </Button>
             <Link
