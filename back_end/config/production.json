@@ -1,4 +1,4 @@
 {
     "jwtPrivateKey":"chicagoTouts",
-    "PORT":"3004"
+    "PORT":"3000"
 }
