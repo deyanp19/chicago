@@ -16,7 +16,7 @@ export default function MarketingPage(props) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <AppAppBar />
+  
       <Hero />
       <div>
         <LogoCollection />

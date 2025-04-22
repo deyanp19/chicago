@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles';
 import ColorModeSelect from '@/components/shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours'
+import requestMethods from '../../../requrests/requestMethods'
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -105,17 +106,16 @@ export default function SignUp(props) {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     if (nameError || emailError || passwordError) {
-      event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log({
+    requestMethods.postRequest({
       name: data.get('name'),
-      lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }, '/users');
   };
 
   return (
