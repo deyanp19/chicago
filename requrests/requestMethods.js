@@ -1,6 +1,6 @@
 
 
-const ApiUrl = 'http://localhost:3004/api'
+const ApiUrl = 'https://chicagotours.site/api'
 //create get request
 async function getRequest(endpoint,jwt){
     const result = await fetch(ApiUrl+endpoint)
