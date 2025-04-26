@@ -9,7 +9,8 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const {error} =  validateAuth(req.body);
+    try {
+         const {error} =  validateAuth(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let user = await User.findOne({email: req.body.email});
@@ -20,7 +21,11 @@ router.post('/', async (req, res) => {
     //  const token = user.generateAuthToken();
     //  res.send(token)
     const token = user.generateAuthToken();
-    res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
+    res.header('x-auth-token',token).send(_.pick(user,['id','name','email'])); 
+    } catch (ex) {
+        res.status(500).send('something happen with the server',ex)
+    }
+  
 
 })
 
