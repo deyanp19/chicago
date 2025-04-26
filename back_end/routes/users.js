@@ -6,12 +6,18 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/me' , auth, async (req,res) => {
-    const user = await User.findById(req.body._id).select('-password');
-    res.send(user);
+    try {
+        
+        const user = await User.findById(req.body._id).select('-password');
+        res.send(user);
+    } catch (ex) {
+        res.status(500).send('something happen on the server');
+    }
 });
 
 router.post('/', async (req, res) => {
-    const {error}  = validate(res.body);
+    try {
+           const {error}  = validate(res.body);
     if (error) return res.status(400).send('+++ Invalid email or password');
     let user = await User.findOne({email: req.body.email});
     if (user) return res.status(400).send('+++ Invalid email ');
@@ -24,6 +30,11 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
     res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
+    } catch (ex) {
+        res.status(500).send('something happen on the server',ex);
+        
+    }
+ 
 })
 
 module.exports = router;
