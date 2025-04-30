@@ -1,3 +1,4 @@
+const asyncMiddleware = require('../middleware/async');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
@@ -5,18 +6,15 @@ const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
-router.get('/me' , auth, async (req,res) => {
-    try {
-        
+router.get('/me' , auth,asyncMiddleware( async (req,res, next) => {
+
         const user = await User.findById(req.body._id).select('-password');
         res.send(user);
-    } catch (ex) {
-        res.status(500).send('something happen on the server');
-    }
-});
+  
+}));
 
-router.post('/', async (req, res) => {
-    try {
+router.post('/',asyncMiddleware( async (req, res, next) => {
+
            const {error}  = validate(res.body);
     if (error) return res.status(400).send('+++ Invalid email or password');
     let user = await User.findOne({email: req.body.email});
@@ -30,11 +28,8 @@ router.post('/', async (req, res) => {
 
     const token = user.generateAuthToken();
     res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
-    } catch (ex) {
-        res.status(500).send('something happen on the server',ex);
-        
-    }
+
  
-})
+}));
 
 module.exports = router;
