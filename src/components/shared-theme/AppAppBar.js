@@ -91,7 +91,7 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Link href='/sign-in'>
+            <Link href="/sign-in">
             <Button color="primary" variant="text" size="small" >
               Sign in
             </Button>
@@ -136,16 +136,20 @@ export default function AppAppBar() {
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem> */}
                 <Divider sx={{ my: 3 }} />
+                <Link href="/sign-up">
                 <MenuItem>
                   <Button color="primary" variant="contained" fullWidth>
                     Sign up
                   </Button>
                 </MenuItem>
+                  </Link>
+                <Link href="/sign-in">
                 <MenuItem>
                   <Button color="primary" variant="outlined" fullWidth>
                     Sign in
                   </Button>
                 </MenuItem>
+                </Link>
               </Box>
             </Drawer>
           </Box>
