@@ -1,3 +1,6 @@
+require('express-async-errors')
+const error = require('./middleware/error');
+
 const config = require('config');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
@@ -13,7 +16,7 @@ if (!config.get('jwtPrivateKey')) {
   process.exit(1);
 }
 
-mongoose.connect('mongodb://localhost/vidly')
+mongoose.connect('mongodb://192.168.1.3/vidly')
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...'));
 
@@ -21,6 +24,9 @@ app.use(cors()); // Or: app.use(cors({ origin: 'http://localhost:3000' }))
 app.use(express.json());
 app.use('/api/auth', auth);
 app.use('/api/users/', users);
+
+app.use(error);// not calling the function error, just referencing
+
 
 
 const port = process.env.PORT || config.get('PORT');
