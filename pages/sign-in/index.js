@@ -13,13 +13,8 @@ export default function Blog(props) {
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
       <AppAppBar />
-      <Container
-        maxWidth="lg"
-        component="main"
-        sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
-      >
+    
       <SignIn />
-      </Container>
       <Footer />
     </AppTheme>
   );
