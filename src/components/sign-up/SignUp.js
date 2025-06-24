@@ -8,6 +8,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
+import LinkSignIn from 'next/link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -127,7 +128,7 @@ export default function SignUp(props) {
           <Chicagotours />
           <Typography
             component="h1"
-            variant="h4"
+            variant="h4" 
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
             Sign up
@@ -192,14 +193,14 @@ export default function SignUp(props) {
               variant="contained"
               onClick={validateInputs}
             >
-              Sign up
+              Sign up 
             </Button>
           </Box>
           <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button
+            {/* <Button
               fullWidth
               variant="outlined"
               onClick={() => alert('Sign up with Google')}
@@ -214,16 +215,16 @@ export default function SignUp(props) {
               startIcon={<FacebookIcon />}
             >
               Sign up with Facebook
-            </Button>
+            </Button> */}
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+              <LinkSignIn
+                href="/sign-in"
                 variant="body2"
                 sx={{ alignSelf: 'center' }}
               >
                 Sign in
-              </Link>
+              </LinkSignIn>
             </Typography>
           </Box>
         </Card>
