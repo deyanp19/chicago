@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
+import LinkSignUp from 'next/link';
+
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -125,9 +127,9 @@ export default function SignIn(props) {
   return (
     <>
       <CssBaseline enableColorScheme />
+      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignInContainer direction="column" justifyContent="space-between">
-        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-        <Card variant="outlined">
+          <Card variant="outlined">
           <Chicagotours />
           <Typography
             component="h1"
@@ -210,7 +212,7 @@ export default function SignIn(props) {
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button
+            {/* <Button
               fullWidth
               variant="outlined"
               onClick={() => alert('Sign in with Google')}
@@ -225,16 +227,16 @@ export default function SignIn(props) {
               startIcon={<FacebookIcon />}
             >
               Sign in with Facebook
-            </Button>
+            </Button> */}
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+              <LinkSignUp
+                href="/sign-up"
                 variant="body2"
                 sx={{ alignSelf: 'center' }}
               >
-                Sign up
-              </Link>
+                Sign up 
+              </LinkSignUp>
             </Typography>
           </Box>
         </Card>
