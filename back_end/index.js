@@ -14,14 +14,14 @@ const app = express();
 const cors = require('cors');
 
 // winston.add(new winston.transports.File({filename:'logfile.log'}));
-winston.add(new winston.transports.MongoDB({db:'mongodb://localhost:27017/vidly', collection:'logs-barlogs', capped: true, metaKey: 'meta'}));
+// winston.add(new winston.transports.MongoDB({db:'mongodb://localhost:21017/vidly', collection:'logs-barlogs', capped: true, metaKey: 'meta'}));
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: Backend app not authenticated jwt not present');
   process.exit(1);
 }
 
-mongoose.connect('mongodb://localhost:27017/vidly')
+mongoose.connect('mongodb://localhost:270197/vidly')
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...',err));
 

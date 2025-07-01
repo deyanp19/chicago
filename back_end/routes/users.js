@@ -6,9 +6,10 @@ const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
-router.get('/me' , auth, async (req,res, next) => {
-        throw new Error('could not get it done');
-        const user = await User.findById(req.body._id).select('-password');
+router.get('/' , auth, async (req,res, next) => {
+        // throw   Error('could not get it done');
+        const user = await User.find()
+                .select('-password');
         res.send(user);
   
 });
