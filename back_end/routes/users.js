@@ -8,9 +8,15 @@ const router = express.Router();
 
 router.get('/' , auth, async (req,res, next) => {
         // throw   Error('could not get it done');
-        const user = await User.find()
+        try {                   
+               const user = await User.find()
                 .select('-password');
-        res.send(user);
+                res.send(user); 
+        } catch (error) {
+                console.log('deyan error',error,'/n-----------/n');
+                res.send(400).send("something faild on the server")
+        }
+        
   
 });
 
