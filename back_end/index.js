@@ -1,7 +1,8 @@
-require('express-async-errors');// this will make the middleware async.js and error.js to be deleted from the code implimentation
+require('express-async-errors');
+
 const winston = require('winston');
-// const error = require('./middleware/error');
 require('winston-mongodb');
+const error = require('./middleware/error');
 
 const config = require('config');
 const Joi = require('joi');
@@ -13,8 +14,8 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-// winston.add(new winston.transports.File({filename:'logfile.log'}));
-// winston.add(new winston.transports.MongoDB({db:'mongodb://localhost:21017/vidly', collection:'logs-barlogs', capped: true, metaKey: 'meta'}));
+winston.add(new winston.transports.File({filename:'logfile.log'}));
+winston.add(new winston.transports.MongoDB({db:'mongodb://localhost/vidly', collection:'logs', capped: true, metaKey: 'meta'}));
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: Backend app not authenticated jwt not present');
@@ -30,7 +31,16 @@ app.use(express.json());
 app.use('/api/auth', auth);
 app.use('/api/users/', users);
 
-//app.use(error);// not calling the function error, just referencing
+// not calling the function error, just referencing
+app.use(error);
+
+// app.use((err, req, res, next)=> {
+//   console.log('deyna',err);
+//   // winston.log('verbose');
+//   winston.error( err.message, {metadata: {prop: err}});
+//   // error
+//   res.status(500).send( {error: 'Big wrong from express-async-error'})
+// })
 
 
 

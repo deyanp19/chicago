@@ -1,16 +1,15 @@
-const { metadata } = require('@/app/layout');
+ 
 const winston = require('winston');
 
-
-
 // below is middleware to handle exceptions
-module.exports = function(err, req,res, next){
-
-  winston.error( err.message, {metadata: {prop: err}});
+module.exports = function(err, req, res, next){
+  // winston.log('error');
+  winston.error( err.message, err);
   //error
-  //worn
+  //warn
   //info - inside mongod
+  // verbose
   //debug
   //silly
-    res.status(500).send('something happen with the server',err)
+  res.status(500).send( {error: 'Big wrong from express-async-error; '+err})
   };
