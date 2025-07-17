@@ -7,12 +7,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/' , auth, async (req,res) => {
-        throw new Error('could not get it done');
+        
         const user = await User.find()
                 .select('-password');
                 res.send(user); 
-         
-  
 });
 
 router.post('/', async (req, res) => {
@@ -30,8 +28,6 @@ router.post('/', async (req, res) => {
 
         const token = user.generateAuthToken();
         res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
-
- 
 });
 
 module.exports = router;
