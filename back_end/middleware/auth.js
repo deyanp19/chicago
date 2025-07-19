@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const config = require("config");
 
 module.exports = function(req, res, next) {
+    // throw new Error('bad religion');
     const token = req.header('x-auth-token');
     if (!token) return res.status(400).send("Access denied. Where is the token, its not provided");
 
