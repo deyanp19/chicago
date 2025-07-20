@@ -15,7 +15,7 @@ function readFileFromParent(filename, relativePath) {
 
 describe("reading for ports and dependencies", () => {
   it("Check dependency ", () => {
-    const content = readFileFromParent("package.json", "..");
+    const content = readFileFromParent("package.json", "../../..");
     expect(JSON.parse(content).dependencies).toStrictEqual({
       bcrypt: "^5.1.1",
       config: "^3.3.12",
@@ -35,7 +35,7 @@ describe("reading for ports and dependencies", () => {
 
   it("Check for equal ports in .env and config ports", () => {
     function readFileFromRoot(filename) {
-      const filePath = path.join(__dirname, "..", filename);
+      const filePath = path.join(__dirname, "../../../", filename);
 
       try {
         const data = fs.readFileSync(filePath, "utf-8"); // synchronous read
@@ -48,7 +48,7 @@ describe("reading for ports and dependencies", () => {
     const readDotEnv = readFileFromRoot(".env").split("=")[1].trim();
 
     function readFileConfig(filename) {
-      const filePath = path.join(__dirname, "../config", filename);
+      const filePath = path.join(__dirname, "../../../config/", filename);
 
       try {
         const data = fs.readFileSync(filePath, "utf-8"); // synchronous read
@@ -64,14 +64,14 @@ describe("reading for ports and dependencies", () => {
   });
 
   it("Check existence of jwtPrivateKey in default.json file", () => {
-    const readProdJWT = readFileFromParent("production.json", "../config");
+    const readProdJWT = readFileFromParent("production.json", "../../../config/");
 
     expect(JSON.parse(readProdJWT).jwtPrivateKey.trim().length ).toBeGreaterThanOrEqual(1);
   });
 });
 const jwt = require("jsonwebtoken");
 const config = require("config");
-const authMiddleware = require("../middleware/auth"); // Your middleware file
+const authMiddleware = require("../../../middleware/auth"); // Your middleware file
 
 jest.mock("jsonwebtoken");
 jest.mock("config");
