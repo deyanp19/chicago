@@ -9,8 +9,8 @@ describe('/api/users',()=>{
     });
 
     afterEach(async ()=>{
-        await server.close();// this closes the server
         await User.deleteMany({})//this cleans up the populated DB
+          server.close();// this closes the server
 
     });
 
@@ -51,6 +51,16 @@ describe('/api/users',()=>{
             expect(res.status).toBe(404);
         });
     });
+
+    describe('POST /',  ()=> {
+        it('should return 401 if client is not logged in', async ()=> {
+            const res = await request(server).post('/api/users').send({name:"rambo", email:'zoko',password:'chomba' });
+
+            expect(res.status).toBe(400);//this check the login crudentials to register user on this path. Its not authenticating, because on this path you save new users and also login.
+        
+        
+        });
+    })
 })
 
 

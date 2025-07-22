@@ -30,12 +30,13 @@ router.post('/', async (req, res) => {
         if (error) return res.status(400).send('+++ Invalid email or password');
         let user = await User.findOne({email: req.body.email});
         if (user) return res.status(400).send('+++ Invalid email ');
+               
 
         user = new User(_.pick(req.body,['email','password','name']));
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
 
-        await user.save();
+        await user.save();//saves to MongoDB with the field password in the document created with bcrypt from ln:36
 
         const token = user.generateAuthToken();
         res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
