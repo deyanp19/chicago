@@ -85,12 +85,12 @@ describe("auth middleware", () => {
     next = jest.fn();
   });
 
-  it("should return 400 if no token is provided", () => {
+  it("should return 401 if no token is provided", () => {
     req.header.mockReturnValue(null);
 
     authMiddleware(req, res, next);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(401);
     expect(res.send).toHaveBeenCalledWith(
       "Access denied. Where is the token, its not provided"
     );
