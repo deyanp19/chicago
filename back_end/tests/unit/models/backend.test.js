@@ -17,19 +17,21 @@ describe("reading for ports and dependencies", () => {
   it("Check dependency ", () => {
     const content = readFileFromParent("package.json", "../../..");
     expect(JSON.parse(content).dependencies).toStrictEqual({
-      bcrypt: "^5.1.1",
-      config: "^3.3.12",
-      cors: "^2.8.5",
-      express: "^4.18.2",
-      "express-async-errors": "^3.1.1",
-      fawn: "^2.1.5",
-      joi: "^17.13.3",
-      "joi-objectid": "^4.0.2",
-      jsonwebtoken: "^9.0.2",
-      lodash: "^4.17.21",
-      mongoose: "^8.13.2",
-      winston: "^3.17.0",
-      "winston-mongodb": "^6.0.0",
+     "bcrypt": "^5.1.1",
+    "compression": "^1.8.1",
+    "config": "^3.3.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "fawn": "^2.1.5",
+    "helmet": "^8.1.0",
+    "joi": "^17.13.3",
+    "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.13.2",
+    "winston": "^3.17.0",
+    "winston-mongodb": "^6.0.0"
     });
   });
 
