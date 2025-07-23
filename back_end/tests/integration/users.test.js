@@ -10,7 +10,7 @@ describe('/api/users',()=>{
 
     afterEach(async ()=>{
         await User.deleteMany({})//this cleans up the populated DB
-          server.close();// this closes the server
+        await server.close();// this closes the server
 
     });
 
