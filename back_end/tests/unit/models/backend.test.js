@@ -62,7 +62,7 @@ describe("reading for ports and dependencies", () => {
     }
     const readConfigPort = readFileConfig("production.json").trim();
 
-    expect(readDotEnv).toBe(JSON.parse(readConfigPort).PORT);
+    expect(JSON.parse(readDotEnv)).toBe(JSON.parse(readConfigPort).PORT);
   });
 
   it("Check existence of jwtPrivateKey in default.json file", () => {

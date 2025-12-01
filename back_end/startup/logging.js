@@ -12,6 +12,6 @@ module.exports = function() {
         process.exit(1);
       });
 
-    winston.add(new winston.transports.MongoDB({db:'mongodb://localhost/vidly', collection:'logs', capped: true, metaKey: 'meta'}));   
+    winston.add(new winston.transports.MongoDB({db:'mongodb://localhost/chicagotours', collection:'logs', capped: true, metaKey: 'meta'}));   
      
 }

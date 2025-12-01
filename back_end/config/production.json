@@ -1,4 +1,6 @@
 {
-    "jwtPrivateKey":"chicagoTouts",
-    "PORT":"3002"
-}
+    "jwtPrivateKey": "testJwtSecretKey",
+    "db":"mongodb://localhost:27017/vidly_tests",
+    "PORT": 3002
+  
+  }

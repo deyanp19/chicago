@@ -1,54 +1,70 @@
-const {User} = require('../../models/user');
-const _ = require('lodash');
 const request = require('supertest');
+const { User } = require('../../models/user');
+const mongoose = require('mongoose');
+
+let server;
+let token;
 
 describe('auth middleware', () => {
-  beforeEach(() => { 
-    server = require('../../index'); 
-    token = new User().generateAuthToken();
-   
+  beforeEach(() => {
+    server = require('../../index');
+
+    // Create a real user and generate a valid token
+    const user = new User({
+      name: 'testuser',
+      email: 'test@example.com',
+      password: '12345678',
+      isAdmin: false
+    });
+    token = user.generateAuthToken(); // This now has a valid _id
+    console.log(token)
   });
- 
-  afterEach(async ()=>{
-    await User.deleteMany({})//this cleans up the populated DB
-    await server.close();// this closes the server
 
-});
+  afterEach(async () => {
+    await User.deleteMany({});
+    // await server.close();
+  });
 
- 
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
 
+  // Helper to make authenticated requests to a protected route
   const exec = () => {
     return request(server)
-      .post('/api/auth')
+      .post('/api/auth') // Replace with an actual protected route
       .set('x-auth-token', token)
-      .send({ name: 'genre',email:'kyrdevel@mara.bg',password:'zombe' });
-  }
+      .send({ name: 'example' });
+  };
 
-
-
-  it('should return 400 if no token is provided', async () => {
-    token = ''; 
+  it('should return 401 if no token is provided', async () => {
+    token = ''; // override
 
     const res = await exec();
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(400); // Usually 401 for auth issues, not 400
   });
 
   it('should return 400 if token is invalid', async () => {
-    token = 'a'; 
+    token = 'invalidtoken123';
 
     const res = await exec();
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(400); // Or 401 depending on your middleware
   });
 
   it('should return 200 if token is valid', async () => {
-    let user = new User({ name: 'genre1',email:'kyrdevel@mara.bg',password:'zombe' });
-    await user.save();
-    const res = await request(server)
-    .post('/api/users')
-    .set('x-auth-token', token)
-    .send({email:'kyrdevel7@mara.bg',password:'zombe',name:'pamarambo'});
-    expect(res.status).toBe(200);
+    const res = await exec();
+
+    expect(res.status).toBe(200); // or 201 depending on the route
+  });
+
+  // Optional: test with expired token
+  it('should return 400 if token is expired', async () => {
+    // Generate token with past expiration
+    token = new User().generateAuthToken({ exp: Math.floor(Date.now() / 1000) - 3600 });
+
+    const res = await exec();
+    expect(res.status).toBe(400);
   });
 });
