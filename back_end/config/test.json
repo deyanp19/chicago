@@ -1,0 +1,6 @@
+{
+  "jwtPrivateKey": "testJwtSecretKey",
+  "db":"mongodb://localhost:27017/vidly_tests",
+  "PORT": 3007
+
+}

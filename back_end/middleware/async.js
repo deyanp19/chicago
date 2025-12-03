@@ -1,4 +1,4 @@
-
+//this module is deprecated . The error handling is with winston
 
 module.exports = function(handler) {
 

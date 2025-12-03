@@ -10,6 +10,7 @@ module.exports = function(app) {
     app.use(express.json());
     app.use('/api/auth', auth);
     app.use('/api/users/', users);
+
     
     // not calling the function error, just referencing
     app.use(error);
