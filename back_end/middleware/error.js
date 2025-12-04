@@ -1,6 +1,16 @@
-
+ 
+const winston = require('winston');
 
 // below is middleware to handle exceptions
-module.exports = function(err, req,res, next){
-    res.status(500).send('something happen with the server',ex)
+module.exports = function(err, req, res, next){
+  // winston.log('error');
+  winston.error( err.message, err);
+  //error
+  //warn
+  //info - inside mongod
+  // verbose
+  //debug
+  //silly
+  res.status(500).send( {error: 'Big wrong from express-async-error; '+err})
+  next(err);
   };

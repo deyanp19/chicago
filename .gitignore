@@ -1,3 +1,5 @@
 node_modules
 .next
 back_end/.env
+back_end/coverage
+back_end/exceptions.log
