@@ -1,35 +1,51 @@
-const asyncMiddleware = require('../middleware/async');
+// const asyncMiddleware = require('../middleware/async');
 const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const {User, validate} = require('../models/user');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../middleware/validateObjectId');
 
-router.get('/me' , auth,asyncMiddleware( async (req,res, next) => {
+router.get('/' , auth, async (req,res) => {
+       //if user isAdmin:true - get all the users if not return only the _id, name, email
+       if (req.user.isAdmin) {
+        const users = await User.find()
+                       .select('-password');
+                       res.send(users); 
+       } else {
+        const user = await User.find({_id: req.user._id})
+                       .select('-password');
+                       res.send(user); 
+       }
+});
 
-        const user = await User.findById(req.body._id).select('-password');
-        res.send(user);
-  
-}));
+router.get('/:id',auth, validateObjectId, async (req,res)=>{
+      
+        const user = await User.findById(req.params.id)
+                .select('-password');
+                
+         if(!user) return res.status(404).send('The given id is not valid');
+         res.send(user);
+});
 
-router.post('/',asyncMiddleware( async (req, res, next) => {
 
-           const {error}  = validate(res.body);
-    if (error) return res.status(400).send('+++ Invalid email or password');
-    let user = await User.findOne({email: req.body.email});
-    if (user) return res.status(400).send('+++ Invalid email ');
+router.post('/', async (req, res) => {
 
-    user = new User(_.pick(req.body,['email','password','name']));
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
+        const {error}  = validate(req.body);
+        if (error) return res.status(400).send('+++ Invalid email or password');
+        let user = await User.findOne({email: req.body.email});
+        if (user) return res.status(400).send('+++ Invalid email ');
+               
 
-    await user.save();
+        user = new User(_.pick(req.body,['email','password','name','isAdmin']));
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
 
-    const token = user.generateAuthToken();
-    res.header('x-auth-token',token).send(_.pick(user,['id','name','email']));
+        await user.save();//saves to MongoDB with the field password in the document created with bcrypt from ln:36
 
- 
-}));
+        const token = user.generateAuthToken();
+        res.header('x-auth-token',token).send(_.pick(user,['id','name','email','isAdmin']));
+});
 
 module.exports = router;
