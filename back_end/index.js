@@ -1,7 +1,7 @@
 const winston = require('winston')
 const express = require('express');
 const app = express();
-const cors = require('cors');
+// const cors = require('cors');
 
 // winston.add(new winston.transports.File({filename:'logfile.log'}));
 // winston.add(new winston.transports.MongoDB({db:'mongodb://localhost:21017/vidly', collection:'logs-barlogs', capped: true, metaKey: 'meta'}));

@@ -1,6 +1,7 @@
 require('express-async-errors');
 const winston = require('winston');
 require('winston-mongodb');
+const config = require('config');
 
 module.exports = function() {
     winston.exceptions.handle(
@@ -12,6 +13,6 @@ module.exports = function() {
         process.exit(1);
       });
 
-    winston.add(new winston.transports.MongoDB({db:'mongodb://localhost/chicagotours', collection:'logs', capped: true, metaKey: 'meta'}));   
+    winston.add(new winston.transports.MongoDB({db:`${config.get('db')}`, collection:'logs', capped: true, metaKey: 'meta'}));   
      
 }
