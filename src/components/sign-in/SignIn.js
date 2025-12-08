@@ -91,7 +91,7 @@ export default function SignIn(props) {
     requestMethods.postRequest({
       email: data.get('email'),
       password: data.get('password'),
-    },'/auth').then(()=>{
+    },'api/auth').then(()=>{
      
       router.push('/marketing')
     });

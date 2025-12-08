@@ -116,7 +116,7 @@ export default function SignUp(props) {
       name: data.get('name'),
       email: data.get('email'),
       password: data.get('password'),
-    }, '/users');
+    }, 'api/users');
   };
 
   return (

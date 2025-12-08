@@ -1,13 +1,13 @@
 
-
-const ApiUrl = 'https://chicagotours.site/api'
+const ApiUrl = process.env.NEXT_PUBLIC_API_URL;
+console.log(ApiUrl);
 //create get request
 async function getRequest(endpoint,jwt){
     const result = await fetch(ApiUrl+endpoint)
     return result;
 }
 
-//post request
+//post request. Hardcoded token for quick development . needs to be replaced with necessary logic for login and sign up.
 async function postRequest(data,endpoint) {
     const options = {
         method:'POST',
