@@ -17,7 +17,7 @@ import { styled } from '@mui/material/styles';
 import ColorModeSelect from '@/components/shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours'
-import requestMethods from '../../../requrests/requestMethods'
+import requestMethods from '../../../utils/requestMethods'
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',

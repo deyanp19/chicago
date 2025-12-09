@@ -16,3 +16,17 @@ module.exports = function() {
     winston.add(new winston.transports.MongoDB({db:`${config.get('db')}`, collection:'logs', capped: true, metaKey: 'meta'}));   
      
 }
+
+// Add this new function to log DB connection
+function logDBConnection() {
+    console.log('Connected to the DB successfully');  // Call this after DB connection is established in db.js or similar
+}
+
+module.exports.logDBConnection = logDBConnection;
+
+// Add this new function to log server startup with the port
+function logServerStart(port) {
+    console.log(`Server has started on port ${port}`);  // Call this when the server begins listening, e.g., in index.js
+}
+
+module.exports.logServerStart = logServerStart;

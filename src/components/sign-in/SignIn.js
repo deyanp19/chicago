@@ -20,7 +20,7 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours';
-import requestMethods from '../../../requrests/requestMethods';
+import requestMethods from '../../../utils/requestMethods';
 import { useRouter } from "next/router";
 
 

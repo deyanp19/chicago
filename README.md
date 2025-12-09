@@ -30,4 +30,39 @@ To learn more about Next.js, take a look at the following resources:
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deployed on chicagotours.site
-
+Project final structure as desired:
+├── .env.development
+├── .git/
+├── .gitignore
+├── .next/
+├── .vscode/
+├── back_end/
+│   └── ...
+├── public/
+│   ├── images/
+│   │   ├── logo.png
+│   │   └── ...
+│   └── favicon.ico
+├── pages/
+│   ├── 404.js
+│   ├── blog/
+│   │   └── Blog.js
+│   ├── index.jsx
+│   ├── marketing/
+│   ├── sign-in/
+│   └── ...
+├── components/
+│   ├── Header.js
+│   ├── Footer.js
+│   └── Button.js
+├── styles/
+│   ├── globals.css
+│   ├── blog.module.css
+│   └── ...
+├── utils/
+│   ├── requests/
+│   │   ├── api.js
+│   │   └── ...
+│   └── helpers.js
+├── README.md
+└── package.json
