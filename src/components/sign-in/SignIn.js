@@ -84,6 +84,7 @@ export default function SignIn(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     if (emailError || passwordError) {
       return;
     }
@@ -91,7 +92,8 @@ export default function SignIn(props) {
     requestMethods.postRequest({
       email: data.get('email'),
       password: data.get('password'),
-    },'api/auth').then(()=>{
+    },'api/auth')
+    .then(()=>{
      
       router.push('/marketing')
     });

@@ -14,7 +14,10 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '@/components/shared-theme/ColorModeIconDropdown';
 import Sitemark from './SitemarkIcon';
 import Chicagotours from './Chicagotours';
-import Link from 'next/link'
+import Link from 'next/link';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -38,6 +41,8 @@ export default function AppAppBar() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <AppBar
@@ -85,22 +90,35 @@ export default function AppAppBar() {
             </Box> */}
           </Box>
           <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              gap: 1,
-              alignItems: 'center',
-            }}
-          >
-            <Link href="/sign-in">
-            <Button color="primary" variant="text" size="small" >
-              Sign in
-            </Button>
-            </Link>
-            <Link href="/sign-up">
-            <Button color="primary" variant="contained" size="small" >
-              Sign up
-            </Button>
-            </Link>
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                gap: 1,
+                alignItems: 'center',
+              }}
+            >
+              { !isLoggedIn ? (
+            <>
+                <Link href="/sign-in">
+                  <Button color="primary" variant="text" size="small" >
+                  Sign in
+                  </Button>
+                </Link>
+            
+                <Link href="/sign-up">
+                  <Button color="primary" variant="contained" size="small" >
+                    Sign up
+                  </Button>
+                </Link>
+            </>
+             ) : (
+              <>
+              <Link href="/">
+                <Button color="primary" variant="text" size="small" >
+                Sign out
+              </Button>
+              </Link>
+              </>
+            )}
             <ColorModeIconDropdown />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
@@ -136,20 +154,31 @@ export default function AppAppBar() {
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem> */}
                 <Divider sx={{ my: 3 }} />
-                <Link href="/sign-up">
-                <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
-                    Sign up
-                  </Button>
-                </MenuItem>
+                 { isLoggedIn ? (
+                <>
+                  <Link href="/sign-up">
+                    <MenuItem>
+                      <Button color="primary" variant="contained" fullWidth>
+                        Sign up
+                      </Button>
+                    </MenuItem>
                   </Link>
-                <Link href="/sign-in">
-                <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
-                    Sign in
-                  </Button>
-                </MenuItem>
-                </Link>
+                  <Link href="/sign-in">
+                  <MenuItem>
+                    <Button color="primary" variant="outlined" fullWidth>
+                      Sign in
+                    </Button>
+                  </MenuItem>
+                  </Link>
+                </>
+                ) : (
+                  <MenuItem>
+                    <Button color="primary" variant="contained" fullWidth>
+                      Sign out
+                    </Button>
+                  </MenuItem>
+                ) 
+                }
               </Box>
             </Drawer>
           </Box>

@@ -4,7 +4,7 @@ import Divider from '@mui/material/Divider';
 import AppTheme from '../shared-theme/AppTheme';
 import AppAppBar from './components/AppAppBar';
 import Hero from './components/Hero';
-import LogoCollection from './components/LogoCollection';
+import LogoCollection from './components/LogoCollection.jsx';
 import Highlights from './components/Highlights';
 import Pricing from './components/Pricing';
 import Features from './components/Features';
@@ -12,26 +12,25 @@ import Testimonials from './components/Testimonials';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 
-export default function MarketingPage(props: { disableCustomTheme?: boolean }) {
+export default function MarketingPage(props) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-
-      <AppAppBar />
-      <Hero />
+  
+      {/* <Hero /> */}
       <div>
-        <LogoCollection />
+        {/* <LogoCollection /> */}
         <Features />
-        <Divider />
-        <Testimonials />
-        <Divider />
+       <Divider />
+         <Testimonials />
+         {/*<Divider />
         <Highlights />
         <Divider />
         <Pricing />
         <Divider />
         <FAQ />
         <Divider />
-        <Footer />
+        <Footer /> */}
       </div>
     </AppTheme>
   );
