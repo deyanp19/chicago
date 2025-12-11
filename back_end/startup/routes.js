@@ -12,6 +12,7 @@ module.exports = function(app) {
          credentials: true ,
          methods: ['GET', 'POST', 'PUT', 'DELETE'] ,
          allowedHeaders: ['Content-Type', 'x-auth-token'],
+         exposedHeaders: ['x-auth-token']
         })); 
         // Or: app.use(cors({ origin: 'http://localhost:3001' ,credentials: true  })) for development until system is in place;include the Access-Control-Allow-Origin header in its responses, specifying your frontend's local development URL
     app.options('*', cors());
