@@ -1,6 +1,5 @@
 
 const ApiUrl = process.env.NEXT_PUBLIC_API_URL;
-console.log(ApiUrl);
 //create get request
 async function getRequest(endpoint,jwt){
     const result = await fetch(ApiUrl+endpoint)
@@ -8,6 +7,20 @@ async function getRequest(endpoint,jwt){
 }
 
 //post request. Hardcoded token for quick development . needs to be replaced with necessary logic for login and sign up.
+async function loginRequest(data) {
+    const options = {
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept':'*/*'
+        },
+        body:JSON.stringify(data)
+    }
+    const result = await fetch(ApiUrl+'api/auth',options)
+ 
+   
+    return result;
+}
 async function postRequest(data,endpoint) {
     const options = {
         method:'POST',
@@ -24,12 +37,12 @@ async function postRequest(data,endpoint) {
     return result;
 }
 //put request
-function updateRequest(data) {
+async function updateRequest(data) {
 
 }
 
 //delete request
-function deleteRequest(id) {
+async function deleteRequest(id) {
     
 }
 
@@ -38,5 +51,6 @@ export default {
     getRequest,
     postRequest,
     updateRequest,
-    deleteRequest
+    deleteRequest,
+    loginRequest
 }

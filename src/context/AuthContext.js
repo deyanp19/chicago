@@ -1,6 +1,5 @@
-// c:\Users\deyan\projects\chicago\src\context\AuthContext.js
-
-import React, { createContext, useState, useEffect } from 'react';
+import  { createContext, useState, useEffect } from 'react';
+import requestMethods from '../../utils/requestMethods';
 
 export const AuthContext = createContext();
 
@@ -11,30 +10,27 @@ export function AuthProvider({ children }) {
   // Check for token on component mount
   useEffect(() => {
     const storedToken = localStorage.getItem('authToken');  // {{change 1}} Load token from local storage
-    if (storedToken) {
-      verifyToken(storedToken);  // Verify the token
-    }
   }, []);
 
   const login = async (credentials) => {
-    try {
-      const response = await fetch('/api/auth', {  // Assuming your backend endpoint is /api/auth
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
+ 
+      const response = await requestMethods.loginRequest({
+        email: credentials.get('email'),
+        password: credentials.get('password'),
       });
-      const data = await response.json();
-      if (response.ok && data.token) {  // {{change 2}} Check for successful response
-        localStorage.setItem('authToken', data.token);  // Store the token
-        setToken(data.token);
+    
+      
+      if (response.ok ) { 
+        const token = response.headers.get('x-auth-token');
+        console.log(response.ok,token);
+        localStorage.setItem('authToken', token);  // Store the token
+        setToken(token);
         setIsLoggedIn(true);
       } else {
         throw new Error('Login failed');
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setIsLoggedIn(false);
-    }
+      
+      return response
   };
 
   const logout = () => {
@@ -43,23 +39,6 @@ export function AuthProvider({ children }) {
     setIsLoggedIn(false);
   };
 
-  const verifyToken = async (token) => {
-    try {
-      const response = await fetch('/api/auth/verify', {  // Optional: Add a verify endpoint if needed
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      if (response.ok) {
-        setIsLoggedIn(true);
-        setToken(token);
-      } else {
-        logout();  // Token is invalid or expired
-      }
-    } catch (error) {
-      console.error('Token verification error:', error);
-      logout();
-    }
-  };
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>

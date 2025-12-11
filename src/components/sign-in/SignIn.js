@@ -20,8 +20,11 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours';
-import requestMethods from '../../../utils/requestMethods';
+// import requestMethods from '../../../utils/requestMethods';
 import { useRouter } from "next/router";
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -72,6 +75,9 @@ export default function SignIn(props) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [loginError, setLoginError] = React.useState('');  // State for login errors
+
+  const { login } = useContext(AuthContext);
 
   const router = useRouter();
   const handleClickOpen = () => {
@@ -82,21 +88,24 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     
     if (emailError || passwordError) {
       return;
     }
+    setLoginError('');  // Clear any previous error before attempting login
     const data = new FormData(event.currentTarget);
-    requestMethods.postRequest({
-      email: data.get('email'),
-      password: data.get('password'),
-    },'api/auth')
-    .then(()=>{
-     
-      router.push('/marketing')
-    });
+      try {
+       await login(data);
+  
+       router.push('/marketing')
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        setLoginError(error.message || 'Login failed. Please try again.');  // Set error state with a user-friendly message
+      }
+    
   };
 
   const validateInputs = () => {
@@ -211,6 +220,12 @@ export default function SignIn(props) {
             >
               Forgot your password?
             </Link>
+            {loginError && (
+              <Typography color="error" sx={{ mt: 2, mb: 2 }}>
+                {loginError}
+              </Typography>
+  // For a more advanced UI, replace with: <Alert severity="error">{loginError}</Alert> if you import Alert from '@mui/material/Alert'
+          )}
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
