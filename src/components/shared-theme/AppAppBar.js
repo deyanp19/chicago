@@ -17,7 +17,7 @@ import Chicagotours from './Chicagotours';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-
+import { useState } from 'react';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -36,13 +36,20 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function AppAppBar() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
   const { isLoggedIn, logout } = useContext(AuthContext);
+
+  const handleSignOut = ()=> {
+    event.preventDefault();
+    console.log('sign out clicked');
+    
+    logout();
+  };
 
   return (
     <AppBar
@@ -113,7 +120,11 @@ export default function AppAppBar() {
              ) : (
               <>
               <Link href="/">
-                <Button color="primary" variant="text" size="small" >
+                <Button 
+                color="primary" 
+                variant="text" 
+                size="small"
+                onClick={handleSignOut} >
                 Sign out
               </Button>
               </Link>
@@ -154,7 +165,7 @@ export default function AppAppBar() {
                 <MenuItem>FAQ</MenuItem>
                 <MenuItem>Blog</MenuItem> */}
                 <Divider sx={{ my: 3 }} />
-                 { isLoggedIn ? (
+                 { !isLoggedIn ? (
                 <>
                   <Link href="/sign-up">
                     <MenuItem>
@@ -172,11 +183,17 @@ export default function AppAppBar() {
                   </Link>
                 </>
                 ) : (
+                  <Link href="/">
                   <MenuItem>
-                    <Button color="primary" variant="contained" fullWidth>
+                    <Button 
+                    color="primary" 
+                    variant="contained" 
+                    fullWidth
+                    onClick={handleSignOut} >
                       Sign out
                     </Button>
                   </MenuItem>
+                  </Link>
                 ) 
                 }
               </Box>

@@ -24,6 +24,7 @@ import Chicagotours from '@/components/shared-theme/Chicagotours';
 import { useRouter } from "next/router";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
 
 
 
@@ -70,12 +71,12 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-  const [loginError, setLoginError] = React.useState('');  // State for login errors
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const [loginError, setLoginError] = useState('');  // State for login errors
 
   const { login } = useContext(AuthContext);
 
