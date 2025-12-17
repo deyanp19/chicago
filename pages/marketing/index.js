@@ -6,7 +6,7 @@ import AppAppBar from '@/components/shared-theme/AppAppBar';
 import MainContent from '@/components/shared-theme/MainContent';
 import Latest from '@/components/shared-theme/Latest';
 import Footer from '@/components/shared-theme/Footer';
-import MarketingPage from '@/components/marketing-page/MarketingPage';
+import MarketingPage from '@/components/marketing-page/MarketingPage.jsx';
 
 export default function Blog(props) {
   return (

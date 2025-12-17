@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import {useEffect} from 'react';
 import Link from 'next/link';
+import { AuthProvider } from '../src/context/AuthContext';
 
  
 import 'bootstrap/dist/css/bootstrap.css';
@@ -22,8 +23,9 @@ export default function MyApp(props) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-rHOJ2ThTcX7Lm8xJF4u8OG45Kkh3VrJF2vfnbc6V9W3I6YGPp8q3BsL5k/pJJoY0" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css"/> */}
             </Head>
-  
-            <Component {...pageProps} />
+            <AuthProvider >
+              <Component {...pageProps} />
+            </AuthProvider>
         </>
     );
   }

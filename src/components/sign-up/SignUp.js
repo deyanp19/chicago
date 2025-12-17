@@ -17,7 +17,10 @@ import { styled } from '@mui/material/styles';
 import ColorModeSelect from '@/components/shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours'
-import requestMethods from '../../../requrests/requestMethods'
+import { useState } from 'react';
+import requestMethods from '../../../utils/requestMethods';
+import Alert from '@mui/material/Alert';
+import { useRouter } from "next/router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -62,12 +65,15 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [nameError, setNameError] = React.useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorMessage, setNameErrorMessage] = useState('');
+  const [signUpError, setSignUpError] = useState('');  // State for login errors
+  
+  const router = useRouter();
 
   const validateInputs = () => {
     const email = document.getElementById('email');
@@ -94,9 +100,9 @@ export default function SignUp(props) {
       setPasswordErrorMessage('');
     }
 
-    if (!name.value || name.value.length < 1) {
+    if (!name.value || name.value.length < 2) {
       setNameError(true);
-      setNameErrorMessage('Name is required.');
+      setNameErrorMessage('Name is required to be at least 5 characters long.');
       isValid = false;
     } else {
       setNameError(false);
@@ -106,18 +112,30 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (nameError || emailError || passwordError) {
       return;
     }
+    setSignUpError('');  // Clear any previous error before attempting login
     const data = new FormData(event.currentTarget);
-    requestMethods.postRequest({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-    }, '/users');
+       try {
+        await requestMethods.signUpRequest(  {
+            name: data.get('name'),
+            email: data.get('email'),
+            password: data.get('password'),
+          });
+
+          router.push('/')// needs to develop new confirmation page for sign in and maybe automatically sign in with the token given at the sign up
+        
+       } catch (error) {
+        console.error('Login signUpRequest error ', error);
+        setSignUpError(error.message || 'Sign up failed. Please try again');
+        
+       }
   };
+
+  
 
   return (
     <>
@@ -183,19 +201,24 @@ export default function SignUp(props) {
                 color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="allowExtraEmails" color="primary" />}
               label="I want to receive updates via email."
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
+              onClick={()=>validateInputs()}
             >
               Sign up 
             </Button>
           </Box>
+               {signUpError && (
+                        <Typography color="error" sx={{ mt: 2, mb: 2 }}>
+                          <Alert severity="error">{signUpError}</Alert> 
+                        </Typography>
+                    )}
           <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>

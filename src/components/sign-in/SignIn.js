@@ -20,8 +20,13 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
 import Chicagotours from '@/components/shared-theme/Chicagotours';
-import requestMethods from '../../../requrests/requestMethods';
+// import requestMethods from '../../../utils/requestMethods';
 import { useRouter } from "next/router";
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { useState } from 'react';
+import Alert from '@mui/material/Alert';
+
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -67,11 +72,14 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const [loginError, setLoginError] = useState('');  // State for login errors
+
+  const { login } = useContext(AuthContext);
 
   const router = useRouter();
   const handleClickOpen = () => {
@@ -82,19 +90,24 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    
     if (emailError || passwordError) {
       return;
     }
+    setLoginError('');  // Clear any previous error before attempting login
     const data = new FormData(event.currentTarget);
-    requestMethods.postRequest({
-      email: data.get('email'),
-      password: data.get('password'),
-    },'/auth').then(()=>{
-     
-      router.push('/marketing')
-    });
+      try {
+       await login(data);
+  
+       router.push('/marketing')
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        setLoginError(error.message || 'Login failed. Please try again.');  // Set error state with a user-friendly message
+      }
+    
   };
 
   const validateInputs = () => {
@@ -209,6 +222,11 @@ export default function SignIn(props) {
             >
               Forgot your password?
             </Link>
+            {loginError && (
+              <Typography color="error" sx={{ mt: 2, mb: 2 }}>
+                <Alert severity="error">{loginError}</Alert> 
+              </Typography>
+          )}
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
