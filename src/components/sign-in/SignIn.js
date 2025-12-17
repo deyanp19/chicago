@@ -25,7 +25,7 @@ import { useRouter } from "next/router";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
-import Alert from '@mui/material/Alert'
+import Alert from '@mui/material/Alert';
 
 
 
