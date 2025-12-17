@@ -25,6 +25,7 @@ import { useRouter } from "next/router";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
+import Alert from '@mui/material/Alert'
 
 
 
@@ -223,9 +224,8 @@ export default function SignIn(props) {
             </Link>
             {loginError && (
               <Typography color="error" sx={{ mt: 2, mb: 2 }}>
-                {loginError}
+                <Alert severity="error">{loginError}</Alert> 
               </Typography>
-  // For a more advanced UI, replace with: <Alert severity="error">{loginError}</Alert> if you import Alert from '@mui/material/Alert'
           )}
           </Box>
           <Divider>or</Divider>

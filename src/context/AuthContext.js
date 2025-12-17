@@ -22,7 +22,6 @@ export function AuthProvider({ children }) {
       
       if (response.ok ) { 
         const token = response.headers.get('x-auth-token');
-        console.log(response.ok,token);
         localStorage.setItem('authToken', token);  // Store the token
         setToken(token);
         setIsLoggedIn(true);
