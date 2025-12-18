@@ -18,8 +18,8 @@ function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
       {'Copyright © '}
-      <Link color="text.secondary" href="https://devman.fun/">
-        Chicagotours.com
+      <Link color="text.secondary" href="#">
+        Chicagotours.site
       </Link>
       &nbsp;
       {new Date().getFullYear()}

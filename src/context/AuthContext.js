@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);  // Store the token for persistence
+  const [user, setUser] = useState({});
 
   // Check for token on component mount
   useEffect(() => {
@@ -25,8 +26,11 @@ export function AuthProvider({ children }) {
         localStorage.setItem('authToken', token);  // Store the token
         setToken(token);
         setIsLoggedIn(true);
+        const userData = await response.json();  
+        localStorage.setItem('userData',JSON.stringify(userData));
+        setUser(userData); 
       } else {
-        throw new Error('Login failed');
+        throw new Error(`Login failed: ${response.status} - ${await response.text()}`); 
       }
       
       return response
@@ -36,11 +40,12 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('authToken');  // {{change 3}} Remove token from storage
     setToken(null);
     setIsLoggedIn(false);
+    setUser('');
   };
 
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn,user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

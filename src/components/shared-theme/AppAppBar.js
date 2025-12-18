@@ -42,7 +42,7 @@ export default function AppAppBar() {
     setOpen(newOpen);
   };
 
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout,user } = useContext(AuthContext);
 
   const handleSignOut = ()=> {
     event.preventDefault();
@@ -58,8 +58,7 @@ export default function AppAppBar() {
       sx={{
         boxShadow: 0,
         bgcolor: 'transparent',
-        backgroundImage: 'url(/images/chicago_skyline_hancock.gif)',
-       
+        backgroundImage: 'url(/images/chicago_skyline_hancock.gif)', 
         backgroundPosition: 'center top 520px',
         mt: 'calc(var(--template-frame-height, 0px) + 18px)',
       }}
@@ -158,12 +157,7 @@ export default function AppAppBar() {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-                {/* <MenuItem>Features</MenuItem>
-                <MenuItem>Testimonials</MenuItem>
-                <MenuItem>Highlights</MenuItem>
-                <MenuItem>Pricing</MenuItem>
-                <MenuItem>FAQ</MenuItem>
-                <MenuItem>Blog</MenuItem> */}
+               
                 <Divider sx={{ my: 3 }} />
                  { !isLoggedIn ? (
                 <>
@@ -183,6 +177,12 @@ export default function AppAppBar() {
                   </Link>
                 </>
                 ) : (
+                  <>
+                  <MenuItem>Your Profile: {user.name} {user.email}</MenuItem>
+                  <MenuItem>Sightseeings</MenuItem>
+                  <MenuItem>Highlights</MenuItem>
+                  <MenuItem>Shopping in Chicago</MenuItem>
+                  <MenuItem>Blog</MenuItem>
                   <Link href="/">
                   <MenuItem>
                     <Button 
@@ -194,6 +194,7 @@ export default function AppAppBar() {
                     </Button>
                   </MenuItem>
                   </Link>
+                  </>
                 ) 
                 }
               </Box>
