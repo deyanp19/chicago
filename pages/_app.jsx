@@ -16,12 +16,7 @@ export default function MyApp(props) {
     return (
          <>
             <Head>
-            <title>Chicagotours</title>
-            <meta name="viewport" content="initial-scale=1.0, maximum-scale-1.0, user-scalable=yes, width=device-width" />
- 
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-rHOJ2ThTcX7Lm8xJF4u8OG45Kkh3VrJF2vfnbc6V9W3I6YGPp8q3BsL5k/pJJoY0" crossorigin="anonymous"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css"/>
+              <title>Chicagotours</title>
             </Head>
             <AuthProvider >
               <Component {...pageProps} />

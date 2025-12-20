@@ -20,17 +20,16 @@ export default function MarketingPage(props) {
       {/* <Hero /> */}
       <div>
         {/* <LogoCollection /> */}
-        <Features />
+        {/* <Features /> */}
        <Divider />
          <Testimonials />
-         {/*<Divider />
+         <Divider />
         <Highlights />
         <Divider />
         <Pricing />
         <Divider />
         <FAQ />
         <Divider />
-        <Footer /> */}
       </div>
     </AppTheme>
   );
