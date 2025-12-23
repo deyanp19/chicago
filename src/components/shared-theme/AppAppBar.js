@@ -65,38 +65,36 @@ export default function AppAppBar() {
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters sx={{ backdropFilter: "blur(3px)"}}  >
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}  >
+            {/* <Sitemark />  */}
             <Link href='/'>
               <Chicagotours  style={{ width: '100%'}} />
             </Link>
-          { !isLoggedIn ? (
-            <Box></Box>
-          ): ( <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}  >
-            {/* <Sitemark />  */}
             {/* <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
               {'Chicagotours © '}
             </Box> */}
             {/* Deyan - the component Sitemark is svg that every letter is path. Use this later to create your own , maybe make youtube video about it */}
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {/* <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
-               Sightseeings
+                Features
+              </Button>
+              <Button variant="text" color="info" size="small">
+                Testimonials
               </Button>
               <Button variant="text" color="info" size="small">
                 Highlights
               </Button>
               <Button variant="text" color="info" size="small">
-               Shopping in Chicago
+                Pricing
               </Button>
-              <Button variant="text" color="info" size="small">
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+                FAQ
+              </Button>
+              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
                 Blog
               </Button>
-              <Link href="/profile">
-              <Button>
-                Your Profile
-              </Button>
-              </Link>
-            </Box>
-          </Box>)
-          }
+            </Box> */}
+          </Box>
           <Box
               sx={{
                 display: { xs: 'none', md: 'flex' },
@@ -180,9 +178,7 @@ export default function AppAppBar() {
                 </>
                 ) : (
                   <>
-                  <Link href="profile">
-                  <MenuItem>Your Profile</MenuItem>
-                  </Link>
+                  <MenuItem>Your Profile: {user.name} {user.email}</MenuItem>
                   <MenuItem>Sightseeings</MenuItem>
                   <MenuItem>Highlights</MenuItem>
                   <MenuItem>Shopping in Chicago</MenuItem>

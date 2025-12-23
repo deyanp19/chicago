@@ -12,12 +12,12 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
-import Chicagotours from './Chicagotours';
+import SitemarkIcon from './SitemarkIcon';
 
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-      {'© '}
+      {'Copyright © '}
       <Link color="text.secondary" href="#">
         Chicagotours.site
       </Link>
@@ -58,7 +58,11 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              {/* Below is beautifull CALL TO ACTION SUBSCRIBE EMAIL add it when needed. DO NOT DELETE */}
+              {/* <SitemarkIcon /> */}
+              <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
+              {'Chicagotours © '}
+            </Box>
+                {/* Below is beautifull CALL TO ACTION SUBSCRIBE EMAIL add it when needed. DO NOT DELETE */}
               {/* <Typography
                 variant="body2"
                 gutterBottom
@@ -198,7 +202,7 @@ export default function Footer() {
             <IconButton
               color="inherit"
               size="small"
-              href="https://x.com/deyan"
+              href="https://x.com/deyanp1"
               aria-label="X"
               sx={{ alignSelf: 'center' }}
             >
