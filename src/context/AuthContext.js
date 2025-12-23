@@ -9,9 +9,18 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState({});
 
   // Check for token on component mount
-  useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');  // {{change 1}} Load token from local storage
-  }, []);
+useEffect(() => {
+  const storedToken = localStorage.getItem('authToken');
+  const storedUserData = localStorage.getItem('userData');
+
+  if (storedToken) {
+    setToken(storedToken);
+    setIsLoggedIn(true);  // Set to true if token exists
+    if (storedUserData) {
+      setUser(JSON.parse(storedUserData));  // Parse and set user data
+    }
+  }
+}, []);
 
   const login = async (credentials) => {
  

@@ -244,8 +244,6 @@ export default function MainContent() {
               backgroundColor: 'transparent',
               border: 'none',
             }}
-          />
-
           /> */}
         </Box>
          {/* Below is beautifull search do add it when needed. DO NOT DELETE */}

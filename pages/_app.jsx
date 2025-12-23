@@ -2,17 +2,17 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import {useEffect} from 'react';
-import Link from 'next/link';
 import { AuthProvider } from '../src/context/AuthContext';
 
- 
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function MyApp(props) {
     const { Component,pageProps } = props;
-    useEffect(()=>{
-        import("bootstrap/dist/js/bootstrap");
-},[]);
+    useEffect(() => {
+        import("bootstrap/dist/js/bootstrap").catch((error) => {
+            console.error("Bootstrap import failed:", error);
+        });
+    }, []);
     return (
          <>
             <Head>
@@ -27,6 +27,6 @@ export default function MyApp(props) {
   
   MyApp.propTypes = {
     Component: PropTypes.elementType.isRequired,
-    emotionCache: PropTypes.object,
+    // emotionCache: PropTypes.object,// consider deleting this line if no problems with emotion
     pageProps: PropTypes.object.isRequired,
   };
