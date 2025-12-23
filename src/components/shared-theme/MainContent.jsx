@@ -245,6 +245,8 @@ export function Search() {
               backgroundColor: 'transparent',
               border: 'none',
             }}
+          />
+
           /> */}
         </Box>
          {/* Below is beautifull search do add it when needed. DO NOT DELETE */}
