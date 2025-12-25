@@ -19,6 +19,7 @@ import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
 import { Collapse } from '@mui/material';
 import { useState } from 'react';
 import Link from '@mui/material/Link';
+import { makeDynamic } from '../../../utils/dynamicWrapper';
 
 const cardData = [
   {
@@ -28,7 +29,7 @@ const cardData = [
     description:
       'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
     authors: [
-      { name: 'D Yordanov', avatar: '/static/images/avatar/1.jpg' ,time:'March 14, 2025'},
+      { name: 'D Yordanov', avatar: '/' ,time:'March 14, 2025'},
     ],
   },
   {
@@ -52,7 +53,7 @@ This rooftop bar features spectacular views of the Chicago skyline, ideal for a 
 Located along the scenic Chicago Riverwalk, these bars offer a relaxed atmosphere and excellent views of the river and iconic bridges, perfect for a day or evening of sightseeing.
     `,
     authors: [
-      { name: 'D Petrov', avatar: '/static/images/avatar/1.jpg' ,time:'March 18, 2025'},
+      { name: 'D Petrov', avatar: '/' ,time:'March 18, 2025'},
     ],
 
   }
@@ -170,7 +171,7 @@ export function Search() {
   );
 }
 
-export default function MainContent() {
+ function MainContentComponent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
   const [expanded, setExpanded] = useState({});
  
@@ -267,8 +268,11 @@ export default function MainContent() {
           style={{ width: '100%'}}
         >
 
-    {cardData?.map((card,index) => (
+    {cardData == undefined ? (
+            <Typography>No data available</Typography>  // Fallback UI
+          ) : cardData?.map((card,index) => (
       <StyledCard 
+          key={index}
           variant="outlined" 
           onClick={()=>handleToggle(index)}
           ariant="outlined"
@@ -301,20 +305,23 @@ export default function MainContent() {
         </Typography>
         <StyledTypography variant="body2" color="text.secondary" gutterBottom>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-          {cardData[index]?.description.split("\n").map(x=>{
+          {cardData[index] == undefined ? (
+            <Typography>No data available</Typography>  // Fallback UI
+          ) : (
+            cardData[index]?.description.split("\n").map((x,descIndex)=>{
             const item= x
             return (
-              <ol>
+              <ol key={descIndex}>
               {x}
               </ol>
             )
-          })}
+          }))}
         </Collapse>
         </StyledTypography>
       </StyledCardContent>
 
       {/* Author Section */}
-      <Author authors={cardData[index]?.authors} />
+      <Author authors={cardData[index]?.authors || [] } />
       </StyledCard>
     )
 
@@ -328,3 +335,6 @@ export default function MainContent() {
     </Box>
   );
 }
+
+const MainContent = makeDynamic(MainContentComponent);
+export default MainContent;

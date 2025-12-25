@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
-import Chicagotours from './Chicagotours';
+import Chicagotours from './ChicagotoursIcon';
 
 function Copyright() {
   return (

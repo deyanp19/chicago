@@ -1,7 +1,8 @@
 import * as React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
+import dynamic from 'next/dynamic';
 
-export default function SitemarkIcon() {
+const ChicagoToursIcon = dynamic(() => Promise.resolve( ()=> {
   return (
     <SvgIcon sx={{ height: 28, width: 188, mr: 2 }}>
     <svg
@@ -36,9 +37,9 @@ export default function SitemarkIcon() {
   <text
     x="20"
     y="30"
-    font-family="Futura, sans-serif"
-    font-size="28"
-    font-weight="bold"
+    fontFamily="Futura, sans-serif"
+    fontSize="28"
+    fontWeight="bold"
     fill="#4876EE"
   >
     Chicago
@@ -46,9 +47,9 @@ export default function SitemarkIcon() {
   <text
     x="140"
     y="30"
-    font-family="Arial, sans-serif"
-    font-size="28"
-    font-weight="bold"
+    fontFamily="Arial, sans-serif"
+    fontSize="28"
+    fontWeight="bold"
     fill="#4876EE"
   >
     Tours
@@ -56,6 +57,7 @@ export default function SitemarkIcon() {
 </svg>
     </SvgIcon>
   );
-}
+}),{ssr:false}
+);
 
-
+export default ChicagoToursIcon;

@@ -12,7 +12,7 @@ export default function Blog(props) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <AppAppBar />
+      {/* <AppAppBar /> */}
         <SignUp />
       <Footer />
     </AppTheme>
