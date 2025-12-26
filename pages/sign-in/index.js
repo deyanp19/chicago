@@ -6,7 +6,7 @@ import AppAppBar from '@components/AppAppBar';
 import MainContent from '@components/MainContent';
 import Latest from '@components/Latest';
 import Footer from '@components/Footer';
-import SignIn from '@components/sign-in/SignIn';
+import SignIn from '@/components/sign-in/SignIn';
 
 export default function Blog(props) {
   return (

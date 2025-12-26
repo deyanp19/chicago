@@ -7,7 +7,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import LinkSignUp from 'next/link';
 
 import TextField from '@mui/material/TextField';
@@ -209,15 +208,6 @@ export default function SignIn(props) {
               }>
               Sign in
             </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Forgot your password?
-            </Link>
             {loginError && (
               <Typography color="error" sx={{ mt: 2, mb: 2 }}>
                 <Alert severity="error">{loginError}</Alert> 

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
-import Link from '@mui/material/Link';
+import Link from 'next/link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -42,7 +42,6 @@ export default function Hero() {
       sx={(theme) => ({
         width: '100%',
         backgroundRepeat: 'no-repeat',
-
         backgroundImage:
           'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(210, 100%, 90%), transparent)',
         ...theme.applyStyles('dark', {
@@ -74,7 +73,7 @@ export default function Hero() {
               fontSize: 'clamp(3rem, 10vw, 3.5rem)',
             }}
           >
-            Our&nbsp;latest&nbsp;
+            Welcome&nbsp;to&nbsp;
             <Typography
               component="span"
               variant="h1"
@@ -86,7 +85,7 @@ export default function Hero() {
                 }),
               })}
             >
-              products
+              chicagotours
             </Typography>
           </Typography>
           <Typography
@@ -96,11 +95,10 @@ export default function Hero() {
               width: { sm: '100%', md: '80%' },
             }}
           >
-            Explore our cutting-edge dashboard, delivering high-quality solutions
-            tailored to your needs. Elevate your experience with top-tier features
-            and services.
+           At this point we have possitive attitude towards developing this project into reccomendation hub. So far only the technology is developing and soon the content will be present.
           </Typography>
-          <Stack
+          {/* BELOW IS BEAUTIFUL COMPONENT CONSIDER ADDING IT.  */}
+          {/* <Stack
             direction={{ xs: 'column', sm: 'row' }}
             spacing={1}
             useFlexGap
@@ -132,20 +130,20 @@ export default function Hero() {
             >
               Start now
             </Button>
-          </Stack>
+          </Stack> */}
           <Typography
             variant="caption"
             color="text.secondary"
             sx={{ textAlign: 'center' }}
           >
-            By clicking &quot;Start now&quot; you agree to our&nbsp;
-            <Link href="#" color="primary">
-              Terms & Conditions
+            
+            <Link href="/profile" color="primary">
+              YOU CAN CHECK YOUR PROFILE from the main menu.
             </Link>
             .
           </Typography>
         </Stack>
-        <StyledBox id="image" />
+        {/* <StyledBox id="image" /> */}
       </Container>
     </Box>
   );
