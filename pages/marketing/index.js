@@ -3,8 +3,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import AppTheme from '@components/AppTheme';
 import AppAppBar from '@components/AppAppBar';
-import MainContent from '@components/MainContent';
-import Latest from '@components/Latest';
 import Footer from '@components/Footer';
 import MarketingComponent from '@/components/marketing-page/MarketingComponent.jsx';
 

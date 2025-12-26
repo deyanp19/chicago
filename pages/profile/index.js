@@ -3,7 +3,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import AppTheme from "@components/AppTheme";
 import AppAppBar from "@components/AppAppBar";
-// import Latest from '@components/Latest';
 import Footer from "@components/Footer";
 import ProfilePicture from "./page_components/ProfilePicture";
 import ProfileInformation from "./page_components/ProfileInformation";
