@@ -6,8 +6,8 @@ export default function ProfileInformation() {
 
     return (
         <div>
-            this is the forms for the information
-            <p>Is logged in now: <b>{isLoggedIn}</b></p>
+            <h1>Hello {user.name}</h1>
+            <p>Is logged in now: <b>{isLoggedIn ? "True" : "False"}</b></p>
             <p>User Information:</p>
             <ul>
                 <li>ID:  {user.id}</li>
