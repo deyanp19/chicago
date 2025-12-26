@@ -2,8 +2,6 @@ import * as React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 import dynamic from 'next/dynamic';
 
-import * as Maimun from 'react';
-
 const ChicagoToursIcon = dynamic(() => Promise.resolve( ()=> {
   return (
     <SvgIcon sx={{ height: 28, width: 188, mr: 2 }}>
