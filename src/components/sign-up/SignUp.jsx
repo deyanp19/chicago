@@ -3,31 +3,24 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
-import LinkSignUp from 'next/link';
-
+import LinkSignIn from 'next/link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import ForgotPassword from './components/ForgotPassword';
-import AppTheme from '../shared-theme/AppTheme';
-import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import ColorModeSelect from '@components/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
-import Chicagotours from '@/components/shared-theme/Chicagotours';
-// import requestMethods from '../../../utils/requestMethods';
-import { useRouter } from "next/router";
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import Chicagotours from '@/components/shared-theme/ChicagoToursIcon'
 import { useState } from 'react';
+import requestMethods from '../../../utils/requestMethods';
 import Alert from '@mui/material/Alert';
-
-
+import { useRouter } from "next/router";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -37,18 +30,18 @@ const Card = styled(MuiCard)(({ theme }) => ({
   padding: theme.spacing(4),
   gap: theme.spacing(2),
   margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
-  },
   boxShadow:
     'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
+  [theme.breakpoints.up('sm')]: {
+    width: '450px',
+  },
   ...theme.applyStyles('dark', {
     boxShadow:
       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
   }),
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
+const SignUpContainer = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
   minHeight: '100%',
   padding: theme.spacing(2),
@@ -71,48 +64,21 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignIn(props) {
+export default function SignUp(props) {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [open, setOpen] = useState(false);
-  const [loginError, setLoginError] = useState('');  // State for login errors
-
-  const { login } = useContext(AuthContext);
-
-  const router = useRouter();
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    if (emailError || passwordError) {
-      return;
-    }
-    setLoginError('');  // Clear any previous error before attempting login
-    const data = new FormData(event.currentTarget);
-      try {
-       await login(data);
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorMessage, setNameErrorMessage] = useState('');
+  const [signUpError, setSignUpError] = useState('');  // State for login errors
   
-       router.push('/marketing')
-        
-      } catch (error) {
-        console.error('Login error:', error);
-        setLoginError(error.message || 'Login failed. Please try again.');  // Set error state with a user-friendly message
-      }
-    
-  };
+  const router = useRouter();
 
   const validateInputs = () => {
     const email = document.getElementById('email');
     const password = document.getElementById('password');
+    const name = document.getElementById('name');
 
     let isValid = true;
 
@@ -134,131 +100,158 @@ export default function SignIn(props) {
       setPasswordErrorMessage('');
     }
 
+    if (!name.value || name.value.length < 2) {
+      setNameError(true);
+      setNameErrorMessage('Name is required to be at least 5 characters long.');
+      isValid = false;
+    } else {
+      setNameError(false);
+      setNameErrorMessage('');
+    }
+
     return isValid;
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (nameError || emailError || passwordError) {
+      return;
+    }
+    setSignUpError('');  // Clear any previous error before attempting login
+    const data = new FormData(event.currentTarget);
+       try {
+        await requestMethods.signUpRequest(  {
+            name: data.get('name'),
+            email: data.get('email'),
+            password: data.get('password'),
+          });
+
+          router.push('/')// needs to develop new confirmation page for sign in and maybe automatically sign in with the token given at the sign up
+        
+       } catch (error) {
+        console.error('Login signUpRequest error ', error);
+        setSignUpError(error.message || 'Sign up failed. Please try again');
+        
+       }
+  };
+
+  
 
   return (
     <>
       <CssBaseline enableColorScheme />
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
-      <SignInContainer direction="column" justifyContent="space-between">
-          <Card variant="outlined">
+      <SignUpContainer direction="column" justifyContent="space-between">
+        <Card variant="outlined">
           <Chicagotours />
           <Typography
             component="h1"
-            variant="h4"
+            variant="h4" 
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
-            noValidate
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
-              gap: 2,
-            }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
+            <FormControl>
+              <FormLabel htmlFor="name">Full name</FormLabel>
+              <TextField
+                autoComplete="name"
+                name="name"
+                required
+                fullWidth
+                id="name"
+                placeholder="Jon Snow"
+                error={nameError}
+                helperText={nameErrorMessage}
+                color={nameError ? 'error' : 'primary'}
+              />
+            </FormControl>
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
                 required
                 fullWidth
+                id="email"
+                placeholder="your@email.com"
+                name="email"
+                autoComplete="email"
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
+                error={emailError}
+                helperText={emailErrorMessage}
+                color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
+                required
+                fullWidth
                 name="password"
                 placeholder="••••••"
                 type="password"
                 id="password"
-                autoComplete="current-password"
-                autoFocus
-                required
-                fullWidth
+                autoComplete="new-password"
                 variant="outlined"
+                error={passwordError}
+                helperText={passwordErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <ForgotPassword open={open} handleClose={handleClose} />
+            {/* <FormControlLabel
+              control={<Checkbox value="allowExtraEmails" color="primary" />}
+              label="I want to receive updates via email."
+            /> */}
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              onClick={ function () {
-
-                validateInputs();
-
-              }
-              }>
-              Sign in
-            </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
+              onClick={()=>validateInputs()}
             >
-              Forgot your password?
-            </Link>
-            {loginError && (
-              <Typography color="error" sx={{ mt: 2, mb: 2 }}>
-                <Alert severity="error">{loginError}</Alert> 
-              </Typography>
-          )}
+              Sign up 
+            </Button>
           </Box>
-          <Divider>or</Divider>
+               {signUpError && (
+                        <Typography color="error" sx={{ mt: 2, mb: 2 }}>
+                          <Alert severity="error">{signUpError}</Alert> 
+                        </Typography>
+                    )}
+          <Divider>
+            <Typography sx={{ color: 'text.secondary' }}>or</Typography>
+          </Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {/* <Button
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign in with Google')}
+              onClick={() => alert('Sign up with Google')}
               startIcon={<GoogleIcon />}
             >
-              Sign in with Google
+              Sign up with Google
             </Button>
             <Button
               fullWidth
               variant="outlined"
-              onClick={() => alert('Sign in with Facebook')}
+              onClick={() => alert('Sign up with Facebook')}
               startIcon={<FacebookIcon />}
             >
-              Sign in with Facebook
+              Sign up with Facebook
             </Button> */}
             <Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account?{' '}
-              <LinkSignUp
-                href="/sign-up"
+              Already have an account?{' '}
+              <LinkSignIn
+                href="/sign-in"
                 variant="body2"
                 sx={{ alignSelf: 'center' }}
               >
-                Sign up 
-              </LinkSignUp>
+                Sign in
+              </LinkSignIn>
             </Typography>
           </Box>
         </Card>
-      </SignInContainer>
+      </SignUpContainer>
     </>
   );
 }

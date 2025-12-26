@@ -1,3 +1,4 @@
+// for import paths see jsconfig.js in the main folder
 import Accordion from "@/components/accordion/Accordion";
 import Card from "@/components/card/Card";
 import Clock from "@/components/clock/Clock";

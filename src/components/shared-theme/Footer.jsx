@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import TwitterIcon from '@mui/icons-material/X';
-import Chicagotours from './Chicagotours';
+import Chicagotours from './ChicagoToursIcon';
 
 function Copyright() {
   return (
@@ -42,14 +42,15 @@ export default function Footer() {
         }}
       >
         <Box
+            justifyContent= 'space-between'
+            display= 'flex'
           sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', sm: 'row' },
             width: '100%',
-            justifyContent: 'space-between',
+            alignItems:"left",
+            padding: 2
           }}
         >
-          <Box
+           {/* <Box
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -58,7 +59,7 @@ export default function Footer() {
             }}
           >
             <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-              {/* Below is beautifull CALL TO ACTION SUBSCRIBE EMAIL add it when needed. DO NOT DELETE */}
+             Below is beautifull CALL TO ACTION SUBSCRIBE EMAIL add it when needed. DO NOT DELETE */}
               {/* <Typography
                 variant="body2"
                 gutterBottom
@@ -95,14 +96,15 @@ export default function Footer() {
                 >
                   Subscribe
                 </Button>
-              </Stack> */}
+              </Stack>
             </Box>
-          </Box>
+          </Box> */}
           <Box
             sx={{
               display: { xs: 'none', sm: 'flex' },
               flexDirection: 'column',
               gap: 1,
+              padding: 2
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
@@ -122,6 +124,8 @@ export default function Footer() {
               display: { xs: 'none', sm: 'flex' },
               flexDirection: 'column',
               gap: 1,
+              padding: 3
+
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
@@ -142,6 +146,8 @@ export default function Footer() {
               display: { xs: 'none', sm: 'flex' },
               flexDirection: 'column',
               gap: 1,
+              padding: 4
+
             }}
           >
             <Typography variant="body2" sx={{ fontWeight: 'medium' }}>

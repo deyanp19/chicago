@@ -8,8 +8,9 @@ import { feedbackCustomizations } from './customizations/feedback';
 import { navigationCustomizations } from './customizations/navigation';
 import { surfacesCustomizations } from './customizations/surfaces';
 import { colorSchemes, typography, shadows, shape } from './themePrimitives';
+import { makeDynamic } from '../../../utils/dynamicWrapper';
 
-function AppTheme(props) {
+function AppThemeComponent(props) {
   const { children, disableCustomTheme, themeComponents } = props;
   const theme = React.useMemo(() => {
     return disableCustomTheme
@@ -44,7 +45,7 @@ function AppTheme(props) {
   );
 }
 
-AppTheme.propTypes = {
+AppThemeComponent.propTypes = {
   children: PropTypes.node,
   /**
    * This is for the docs site. You can ignore it or remove it.
@@ -52,5 +53,7 @@ AppTheme.propTypes = {
   disableCustomTheme: PropTypes.bool,
   themeComponents: PropTypes.object,
 };
+
+const AppTheme = makeDynamic(AppThemeComponent);
 
 export default AppTheme;

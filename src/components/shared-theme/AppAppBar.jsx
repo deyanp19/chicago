@@ -11,13 +11,16 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ColorModeIconDropdown from '@/components/shared-theme/ColorModeIconDropdown';
+import ColorModeIconDropdown from '@components/ColorModeIconDropdown';
 import Sitemark from './SitemarkIcon';
-import Chicagotours from './Chicagotours';
+import ChicagoToursIcon from './ChicagoToursIcon';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const AppAppBar = dynamic(() => Promise.resolve(AppAppBarComponent), { ssr: false });
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -35,7 +38,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar() {
+ function AppAppBarComponent() {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -66,7 +69,7 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters sx={{ backdropFilter: "blur(3px)"}}  >
             <Link href='/'>
-              <Chicagotours  style={{ width: '100%'}} />
+              <ChicagoToursIcon  style={{ width: '100%'}} />
             </Link>
           { !isLoggedIn ? (
             <Box></Box>
@@ -209,3 +212,5 @@ export default function AppAppBar() {
     </AppBar>
   );
 }
+
+export default AppAppBar;
