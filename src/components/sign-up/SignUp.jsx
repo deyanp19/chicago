@@ -7,16 +7,15 @@ import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import LinkSignIn from 'next/link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import ColorModeSelect from '@/components/shared-theme/ColorModeSelect';
+import ColorModeSelect from '@components/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
-import Chicagotours from '@/components/shared-theme/Chicagotours'
+import Chicagotours from '@/components/shared-theme/ChicagoToursIcon'
 import { useState } from 'react';
 import requestMethods from '../../../utils/requestMethods';
 import Alert from '@mui/material/Alert';

@@ -11,13 +11,15 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ColorModeIconDropdown from '@/components/shared-theme/ColorModeIconDropdown';
-import Sitemark from './SitemarkIcon';
-import Chicagotours from './Chicagotours';
+import ColorModeIconDropdown from '@components/ColorModeIconDropdown';
+import ChicagoToursIcon from './ChicagoToursIcon';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
+
+const AppAppBar = dynamic(() => Promise.resolve(AppAppBarComponent), { ssr: false });
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -35,7 +37,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar() {
+ function AppAppBarComponent() {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -45,9 +47,7 @@ export default function AppAppBar() {
   const { isLoggedIn, logout,user } = useContext(AuthContext);
 
   const handleSignOut = ()=> {
-    event.preventDefault();
-    console.log('sign out clicked');
-    
+    event.preventDefault();    
     logout();
   };
 
@@ -68,7 +68,7 @@ export default function AppAppBar() {
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}  >
             {/* <Sitemark />  */}
             <Link href='/'>
-              <Chicagotours  style={{ width: '100%'}} />
+              <ChicagoToursIcon  style={{ width: '100%'}} />
             </Link>
             {/* <Box sx={{display: {xs: 'none', md: 'flex'},color:'text.primary' } }>
               {'Chicagotours © '}
@@ -205,3 +205,5 @@ export default function AppAppBar() {
     </AppBar>
   );
 }
+
+export default AppAppBar;

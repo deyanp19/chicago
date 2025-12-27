@@ -17,6 +17,8 @@ export default function MyApp(props) {
          <>
             <Head>
               <title>Chicagotours</title>
+              <meta name="viewport" content="initial-scale=1, width=device-width,user-scalable=yes" />
+ 
             </Head>
             <AuthProvider >
               <Component {...pageProps} />
@@ -27,6 +29,10 @@ export default function MyApp(props) {
   
   MyApp.propTypes = {
     Component: PropTypes.elementType.isRequired,
+<<<<<<< HEAD
     emotionCache: PropTypes.object,
+=======
+    emotionCache: PropTypes.object,// consider deleting this line if no problems with emotion
+>>>>>>> origin/development
     pageProps: PropTypes.object.isRequired,
   };

@@ -7,7 +7,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
 import LinkSignUp from 'next/link';
 
 import TextField from '@mui/material/TextField';
@@ -16,11 +15,8 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './components/ForgotPassword';
-import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from './components/CustomIcons';
-import Chicagotours from '@/components/shared-theme/Chicagotours';
-// import requestMethods from '../../../utils/requestMethods';
 import { useRouter } from "next/router";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -143,7 +139,6 @@ export default function SignIn(props) {
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignInContainer direction="column" justifyContent="space-between">
           <Card variant="outlined">
-          <Chicagotours />
           <Typography
             component="h1"
             variant="h4"
@@ -213,15 +208,6 @@ export default function SignIn(props) {
               }>
               Sign in
             </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
-            >
-              Forgot your password?
-            </Link>
             {loginError && (
               <Typography color="error" sx={{ mt: 2, mb: 2 }}>
                 <Alert severity="error">{loginError}</Alert> 
