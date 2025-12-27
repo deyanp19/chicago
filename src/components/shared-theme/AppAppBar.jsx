@@ -47,9 +47,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   const { isLoggedIn, logout,user } = useContext(AuthContext);
 
   const handleSignOut = ()=> {
-    event.preventDefault();
-    console.log('sign out clicked');
-    
+    event.preventDefault();    
     logout();
   };
 
