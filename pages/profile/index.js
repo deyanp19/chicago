@@ -4,7 +4,6 @@ import Container from "@mui/material/Container";
 import AppTheme from "@components/AppTheme";
 import AppAppBar from "@components/AppAppBar";
 import Footer from "@components/Footer";
-import ProfilePicture from "./page_components/ProfilePicture";
 import ProfileInformation from "./page_components/ProfileInformation";
 import Jumbotron from "@/components/jumbotron/Jumbotron";
 
@@ -18,11 +17,10 @@ export default function Profile(props) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        <Jumbotron image='images/24hours_sign.gif' >
+        {/* <Jumbotron image='images/24hours_sign.gif' > */}
 
-        {/* <ProfilePicture /> */}
         <ProfileInformation />
-        </Jumbotron>
+        {/* </Jumbotron> */}
         {/* <Latest /> */}
       </Container>
       <Footer />
