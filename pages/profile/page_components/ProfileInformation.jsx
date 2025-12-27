@@ -11,7 +11,7 @@ export default function ProfileInformation(props) {
         <AppTheme {...props} >
             <CssBaseline enableColorScheme />
         <div>
-            <h1>Hello {user.name}</h1>
+            {/* <h1>Hello {user.name}</h1>
             <p>Is logged in now: <b>{isLoggedIn ? "True" : "False"}</b></p>
             <p>User Information:</p>
             <ul>
@@ -19,7 +19,7 @@ export default function ProfileInformation(props) {
                 <li><b>email: </b>{user.email}</li>
 
                 <li><b>name: </b>{user.name}</li>
-            </ul>
+            </ul> */}
         </div>
         </AppTheme>
     );
