@@ -17,10 +17,13 @@ export default function ProfileInformation(props) {
              <p>Is logged in now: <b>{isLoggedIn ? "True" : "False"}</b></p>
             <p>User Information:</p>
            <List component="ol"> 
+
                 <ListItemText primary={`ID: ${user.id}`} />
                 <ListItemText primary={`name: ${user.name}`} />
                 <ListItemText primary={`email: ${user.email}`} />
+             
            </List>
+            
         </div>
         </AppTheme>
     );
