@@ -37,6 +37,10 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
+const StayledLink = styled(Link)(({theme}) =>({
+  textDecoration:'none'
+}))
+
  function AppAppBarComponent() {
   const [open, setOpen] = useState(false);
 
@@ -77,23 +81,29 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
             </Box> */}
             {/* Deyan - the component Sitemark is svg that every letter is path. Use this later to create your own , maybe make youtube video about it */}
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <StayledLink href="sightseeing">
               <Button variant="text" color="info" size="small">
                Sightseeings
               </Button>
+              </StayledLink>
+              <StayledLink href="highlights">
               <Button variant="text" color="info" size="small">
                 Highlights
               </Button>
+              </StayledLink>
+              <StayledLink href="shopping">
               <Button variant="text" color="info" size="small">
                Shopping in Chicago
               </Button>
-              <Button variant="text" color="info" size="small">
+              </StayledLink>
+              {/* <Button variant="text" color="info" size="small">
                 Blog
-              </Button>
-              <Link href="/profile">
+              </Button> */}
+              <StayledLink href="/profile" >
               <Button>
                 Your Profile
               </Button>
-              </Link>
+              </StayledLink>
             </Box>
           </Box>)
           }
@@ -180,13 +190,19 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
                 </>
                 ) : (
                   <>
-                  <Link href="profile">
+                  <StayledLink href="profile">
                   <MenuItem>Your Profile</MenuItem>
-                  </Link>
+                  </StayledLink>
+                  <StayledLink href="sightseeing">
                   <MenuItem>Sightseeings</MenuItem>
+                  </StayledLink>
+                  <StayledLink href="highlights">
                   <MenuItem>Highlights</MenuItem>
+                  </StayledLink>
+                  <StayledLink href="shopping">
                   <MenuItem>Shopping in Chicago</MenuItem>
-                  <MenuItem>Blog</MenuItem>
+                  </StayledLink>
+                  {/* <MenuItem>Blog</MenuItem> */}
                   <Link href="/">
                   <MenuItem>
                     <Button 

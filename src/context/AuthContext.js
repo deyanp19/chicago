@@ -10,7 +10,16 @@ export function AuthProvider({ children }) {
 
   // Check for token on component mount
   useEffect(() => {
-    const storedToken = localStorage.getItem('authToken');  // {{change 1}} Load token from local storage
+    const storedToken = localStorage.getItem('authToken'); 
+    const storedUserData = localStorage.getItem('userData');
+
+    if (storedToken) {
+      setToken(storedToken);
+      setIsLoggedIn(true);
+      if (storedUserData) {
+          setUser(JSON.parse(storedUserData));
+        }
+    }
   }, []);
 
   const login = async (credentials) => {
