@@ -17,10 +17,10 @@ export default function Profile(props) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        {/* <Jumbotron image='images/24hours_sign.gif' > */}
+        <Jumbotron image='images/24hours_sign.gif' >
 
         <ProfileInformation />
-        {/* </Jumbotron> */}
+        </Jumbotron>
         {/* <Latest /> */}
       </Container>
       <Footer />

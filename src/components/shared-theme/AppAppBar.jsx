@@ -46,8 +46,8 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
   const { isLoggedIn, logout, user } = useContext(AuthContext);
 
-  const handleSignOut = (event)=> {
-    event.preventDefault();    
+  const handleSignOut = ()=> {
+      // here event.preventDefault is not called because the Link element needs that event to redirect- this is my interpretation under assesment that i made
     logout();
   };
 
