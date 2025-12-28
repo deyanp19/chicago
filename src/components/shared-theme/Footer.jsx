@@ -201,7 +201,7 @@ export default function Footer() {
             >
               <FacebookIcon />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               color="inherit"
               size="small"
               href="https://x.com/deyanp1"
@@ -209,7 +209,7 @@ export default function Footer() {
               sx={{ alignSelf: 'center' }}
             >
               <TwitterIcon />
-            </IconButton>
+            </IconButton> */}
             {/* <IconButton
               color="inherit"
               size="small"
