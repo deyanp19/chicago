@@ -3,5 +3,7 @@ node_modules
 back_end/.env
 back_end/coverage
 back_end/exceptions.log
+back
 #.env.development
 #.env.production
+.vscode

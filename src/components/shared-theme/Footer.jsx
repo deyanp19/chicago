@@ -17,7 +17,7 @@ import Chicagotours from './ChicagoToursIcon';
 function Copyright() {
   return (
     <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-      {'© '}
+      {'Copyright © '}
       <Link color="text.secondary" href="#">
         Chicagotours.site
       </Link>
@@ -201,15 +201,15 @@ export default function Footer() {
             >
               <FacebookIcon />
             </IconButton>
-            <IconButton
+            {/* <IconButton
               color="inherit"
               size="small"
-              href="https://x.com/deyan"
+              href="https://x.com/deyanp1"
               aria-label="X"
               sx={{ alignSelf: 'center' }}
             >
               <TwitterIcon />
-            </IconButton>
+            </IconButton> */}
             {/* <IconButton
               color="inherit"
               size="small"
