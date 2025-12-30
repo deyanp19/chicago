@@ -3,11 +3,11 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import AppTheme from "@components/AppTheme";
 import AppAppBar from "@components/AppAppBar";
+import Latest from "@components/Latest";
 import Footer from "@components/Footer";
-import ProfileInformation from "../../src/components/profile_page/ProfileInformation";
-import Jumbotron from "@/components/jumbotron/Jumbotron";
+import AdminComponent from "@/components/admin/AdminComponent"
 
-export default function Profile(props) {
+export default function AdminPanel(props) {
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
@@ -17,10 +17,7 @@ export default function Profile(props) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        <Jumbotron image='images/24hours_sign.gif' >
-
-        <ProfileInformation />
-        </Jumbotron>
+        <AdminComponent />
         {/* <Latest /> */}
       </Container>
       <Footer />

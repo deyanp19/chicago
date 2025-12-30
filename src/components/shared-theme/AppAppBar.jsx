@@ -81,29 +81,34 @@ const StayledLink = styled(Link)(({theme}) =>({
             </Box> */}
             {/* Deyan - the component Sitemark is svg that every letter is path. Use this later to create your own , maybe make youtube video about it */}
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <StayledLink href="sightseeing">
-              <Button variant="text" color="info" size="small">
-               Sightseeings
-              </Button>
+              <StayledLink href="sightseeing">
+                <Button variant="text" color="info" size="small">
+                Sightseeings
+                </Button>
               </StayledLink>
               <StayledLink href="highlights">
-              <Button variant="text" color="info" size="small">
-                Highlights
-              </Button>
+                <Button variant="text" color="info" size="small">
+                  Highlights
+                </Button>
               </StayledLink>
               <StayledLink href="shopping">
-              <Button variant="text" color="info" size="small">
-               Shopping in Chicago
-              </Button>
+                <Button variant="text" color="info" size="small">
+                Shopping in Chicago
+                </Button>
               </StayledLink>
               {/* <Button variant="text" color="info" size="small">
                 Blog
               </Button> */}
               <StayledLink href="/profile" >
-              <Button>
-                Your Profile
-              </Button>
+                <Button>
+                  Your Profile
+                </Button>
               </StayledLink>
+              {user.isAdmin && (<StayledLink href="/admin" >
+                <Button>
+                 Admin Dashboard
+                </Button>
+              </StayledLink>)}
             </Box>
           </Box>)
           }
@@ -203,7 +208,11 @@ const StayledLink = styled(Link)(({theme}) =>({
                   <MenuItem>Shopping in Chicago</MenuItem>
                   </StayledLink>
                   {/* <MenuItem>Blog</MenuItem> */}
-                  <Link href="/">
+                  <StayledLink href="/">{
+
+                 user.isAdmin && (<StayledLink href="admin">
+                  <MenuItem>Admin Dashboard</MenuItem>
+                  </StayledLink>)}
                   <MenuItem>
                     <Button 
                     color="primary" 
@@ -213,7 +222,7 @@ const StayledLink = styled(Link)(({theme}) =>({
                       Sign out
                     </Button>
                   </MenuItem>
-                  </Link>
+                  </StayledLink>
                   </>
                 ) 
                 }

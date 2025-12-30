@@ -12,7 +12,7 @@ export default function ShoppingPage() {
     <AppTheme>
       <CssBaseline enableColorScheme />
       <AppAppBar />
-      <Container id="article" sx={{ py: { xs: 8, sm: 16 } }}>
+      <Container id="article" sx={{  xs: 8, my: 16 ,gap: 4 }}>
         {/* {{change 2}} Add the article as Typography elements */}
         <Typography variant="h4" component="h1" gutterBottom>
           Shopping in Downtown Chicago
