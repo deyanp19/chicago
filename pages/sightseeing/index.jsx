@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import AppTheme from "@components/AppTheme";
 import AppAppBar from "@components/AppAppBar";
 import Footer from "@components/Footer";
-import Jumbotron from "@/components/jumbotron/Jumbotron";
 
 export default function Sightseeing(props) {
   return (
@@ -17,7 +16,6 @@ export default function Sightseeing(props) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        <Jumbotron image='images/24hours_sign.gif'>
           {/* ... existing code for the previous article ... */}
           {/* {{change 1}} Add the new article as additional Typography elements */}
           <Typography variant="h6" gutterBottom sx={{ mt: 4 }}>
@@ -36,7 +34,6 @@ export default function Sightseeing(props) {
             The Magnificent Mile also hosts seasonal events, such as the dazzling holiday lights in winter or the festive Great Flower Show in spring, adding to its allure. For families, it's an ideal spot for leisurely walks, with access to nearby attractions like Millennium Park and the Chicago Riverwalk. Whether you're indulging in retail therapy, savoring gourmet cuisine, or simply people-watching, the Magnificent Mile encapsulates Chicago's dynamic spirit.
           </Typography>
           {/* End of change */}
-        </Jumbotron>
         {/* <Latest /> */}
       </Container>
       <Footer />
