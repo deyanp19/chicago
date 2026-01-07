@@ -34,7 +34,6 @@ describe('auth middleware', () => {
     token = ''; // override
 
     const res = await exec(body,token);
-    // console.log(res.status)
     expect(res.status).toBe(400); // Usually 401 for auth issues, not 400
   });
 
