@@ -213,6 +213,7 @@ const StayledLink = styled(Link)(({theme}) =>({
                  user.isAdmin && (<StayledLink href="admin">
                   <MenuItem>Admin Dashboard</MenuItem>
                   </StayledLink>)}
+                <Divider sx={{ my: 3 }} />
                   <MenuItem>
                     <Button 
                     color="primary" 
