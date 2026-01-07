@@ -20,13 +20,16 @@ import { Collapse } from '@mui/material';
 import { useState } from 'react';
 import Link from '@mui/material/Link';
 import { makeDynamic } from '../../../utils/dynamicWrapper';
+import { useEffect } from 'react';
+import requestMethods from '../../../utils/requestMethods'
+import dateFormat from '../../../utils/dateFormat';
 
 const cardData = [
   {
     image:'/images/chicago_skyline_hancock.gif',
     tag: 'Beautiful Skyline',
     title: 'The city with 178 neighbourhoods',
-    description:
+    content:
       'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
     authors: [
       { name: 'D Yordanov', avatar: '/' ,time:'March 14, 2025'},
@@ -36,7 +39,7 @@ const cardData = [
     image:'/images/24hours_sign.gif',
     tag: 'Bars',
     title: 'Bars',
-    description:
+    content:
     `Here are five popular bars in Chicago that are great for sightseeing while enjoying a drink: \n 1. **The Signature Lounge at the 95th**  
 Located on the 95th floor of the John Hancock Center, this bar offers breathtaking panoramic views of the city skyline, Lake Michigan, and beyond.
 
@@ -107,7 +110,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: 'ellipsis',
 });
 
-function Author({ authors }) {
+function Author({ author , time}) {
   return (
     <Box
       sx={{
@@ -123,7 +126,7 @@ function Author({ authors }) {
         sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
       >
         <AvatarGroup max={3}>
-          {authors.map((author, index) => (
+          {author.map((author, index) => (
             <Avatar
               key={index}
               alt={author.name}
@@ -133,16 +136,16 @@ function Author({ authors }) {
           ))}
         </AvatarGroup>
         <Typography variant="caption">
-          {authors.map((author) => author.name).join(', ')}
+          {author.map((author) => author.name).join(', ')}
         </Typography>
       </Box>
-      <Typography variant="caption">{authors.map(author=>author.time)}</Typography>
+      <Typography variant="caption">{time}</Typography>
     </Box>
   );
 }
 
 Author.propTypes = {
-  authors: PropTypes.arrayOf(
+  author: PropTypes.arrayOf(
     PropTypes.shape({
       avatar: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
@@ -174,6 +177,27 @@ export function Search() {
  function MainContentComponent() {
   const [focusedCardIndex, setFocusedCardIndex] = React.useState(null);
   const [expanded, setExpanded] = useState({});
+  const [articles, setArticles] = useState();
+
+  useEffect(()=>{
+     const getArticles = async () => {
+ 
+      const response = await requestMethods.getRequest('api/posts');     
+      
+      if (response.ok ) { 
+      
+        const articlesData = await response.json();  
+        setArticles(articlesData);
+        
+      } else {
+        throw new Error(`Getting articles failed: ${response.status} - ${await response.text()}`); 
+      }
+      
+      return response
+  };
+    getArticles();
+    
+  },[]);
  
   const handleToggle = (index) => {
     setExpanded((prev) => ({
@@ -236,8 +260,8 @@ export function Search() {
         >
               {/* Below is beautifullTAB PAGES do add it when needed. DO NOT DELETE */}
  
-          {/* <Chip onClick={handleClick} size="medium" label="All categories" /> */}
-          {/* <Chip
+          {/* <Chip onClick={handleClick} size="medium" label="All categories" />
+          <Chip
             onClick={handleClick}
             size="medium"
             label="Company"
@@ -245,9 +269,9 @@ export function Search() {
               backgroundColor: 'transparent',
               border: 'none',
             }}
-          />
-
           /> */}
+
+
         </Box>
          {/* Below is beautifull search do add it when needed. DO NOT DELETE */}
         {/* <Box
@@ -270,9 +294,9 @@ export function Search() {
           style={{ width: '100%'}}
         >
 
-    {cardData == undefined ? (
+    {articles == undefined ? (
             <Typography>No data available</Typography>  // Fallback UI
-          ) : cardData?.map((card,index) => (
+          ) : articles?.map((card,index) => (
       <StyledCard 
           key={index}
           variant="outlined" 
@@ -280,7 +304,6 @@ export function Search() {
           ariant="outlined"
           onFocus={() => handleFocus(1)}
           onBlur={handleBlur}
-          tabIndex={0}
           className={focusedCardIndex === 1 ? 'Mui-focused' : ''}
           >
             {/* Collapsible Image */}
@@ -288,7 +311,7 @@ export function Search() {
               <CardMedia
                 component="img"
                 alt="Chicago Skyline"
-                image={cardData[index].image}
+                image={articles[index].image}
                 sx={{
                   aspectRatio: "16 / 9",
                   borderBottom: "1px solid",
@@ -300,17 +323,17 @@ export function Search() {
       {/* Card Content */}
       <StyledCardContent>
         <Typography gutterBottom variant="caption" component="div">
-          {cardData[index]?.tag}
+          {articles[index]?.tag}
         </Typography>
         <Typography gutterBottom variant="h6" component="div">
-          {cardData[index]?.title}
+          {articles[index]?.title}
         </Typography>
         <StyledTypography variant="body2" color="text.secondary" gutterBottom>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-          {cardData[index] == undefined ? (
+          {articles[index] == undefined ? (
             <Typography>No data available</Typography>  // Fallback UI
           ) : (
-            cardData[index]?.description.split("\n").map((x,descIndex)=>{
+            articles[index]?.content.split("\n").map((x,descIndex)=>{
             const item= x
             return (
               <ol key={descIndex}>
@@ -323,7 +346,7 @@ export function Search() {
       </StyledCardContent>
 
       {/* Author Section */}
-      <Author authors={cardData[index]?.authors || [] } />
+     <Author author={articles[index]?.author || [] } time={dateFormat.formatCST(articles[index]?.dateCreated)}/>
       </StyledCard>
     )
 

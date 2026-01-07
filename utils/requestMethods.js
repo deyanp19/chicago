@@ -1,40 +1,51 @@
-
 const ApiUrl = process.env.NEXT_PUBLIC_API_URL;
 //create get request
-async function getRequest(endpoint,jwt){
-    const result = await fetch(ApiUrl+endpoint)
-    return result;
+async function getRequest(endpoint, jwt) {
+  const result = await fetch(ApiUrl + endpoint);
+  return result;
 }
 
-//post request. Hardcoded token for quick development . needs to be replaced with necessary logic for login and sign up.
+async function postArticle(data) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+    body: JSON.stringify(data),
+  };
+  const result = await fetch(ApiUrl + "api/posts", options);
+
+  return result;
+}
+
 async function loginRequest(data) {
-    const options = {
-        method:'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept':'*/*'
-        },
-        body:JSON.stringify(data)
-    }
-    const result = await fetch(ApiUrl+'api/auth',options)
- 
-   
-    return result;
-};
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+    },
+    body: JSON.stringify(data),
+  };
+  const result = await fetch(ApiUrl + "api/auth", options);
+
+  return result;
+}
 
 async function signUpRequest(data) {
-    const options = {
-        method:'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept':'*/*'
-        },
-        body:JSON.stringify(data)
-    }
-    const result = await fetch(ApiUrl+ 'api/users',options)
- 
-   
-    return result;
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+    },
+    body: JSON.stringify(data),
+  };
+  const result = await fetch(ApiUrl + "api/users", options);
+
+  return result;
 }
 // async function postRequest(data,endpoint) {
 //     const options = {
@@ -48,24 +59,20 @@ async function signUpRequest(data) {
 //     }
 //     const result = await fetch(ApiUrl+endpoint,options)
 //     const token = result.headers.get('x-auth-token');
-   
+
 //     return result;
 // }
 //put request
-async function updateRequest(data) {
-
-}
+async function updateRequest(data) {}
 
 //delete request
-async function deleteRequest(id) {
-    
-}
-
+async function deleteRequest(id) {}
 
 export default {
-    getRequest,
-    updateRequest,
-    deleteRequest,
-    loginRequest,
-    signUpRequest
-}
+  getRequest,
+  postArticle,
+  updateRequest,
+  deleteRequest,
+  loginRequest,
+  signUpRequest,
+};
