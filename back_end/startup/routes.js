@@ -2,6 +2,7 @@
 const error = require('../middleware/error');
 const auth = require('../routes/auth');
 const users = require('../routes/users');
+const posts = require('../routes/posts');
 const cors = require('cors');
 const express = require('express');
 const config = require('config');
@@ -19,6 +20,7 @@ module.exports = function(app) {
     app.use(express.json());
     app.use('/api/auth', auth);
     app.use('/api/users/', users);
+    app.use('/api/posts/', posts);
 
     
     // not calling the function error, just referencing
