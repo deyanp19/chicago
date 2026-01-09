@@ -8,7 +8,7 @@ const router = express.Router();
 const validateObjectId = require('../middleware/validateObjectId');
 
 router.get('/',  async (req,res) => {
-    const posts = await Post.find();
+    const posts = await Post.find().sort([['dateCreated', -1]]).limit(30);
     res.send(posts);
 });
 

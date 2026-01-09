@@ -16,7 +16,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
-import { Collapse } from '@mui/material';
+import { Collapse, List } from '@mui/material';
 import { useState } from 'react';
 import Link from '@mui/material/Link';
 import { makeDynamic } from '../../../utils/dynamicWrapper';
@@ -24,43 +24,7 @@ import { useEffect } from 'react';
 import requestMethods from '../../../utils/requestMethods'
 import dateFormat from '../../../utils/dateFormat';
 
-const cardData = [
-  {
-    image:'/images/chicago_skyline_hancock.gif',
-    tag: 'Beautiful Skyline',
-    title: 'The city with 178 neighbourhoods',
-    content:
-      'Amazing aestetics and arcitecture in the heart of the USA will get you to new feel of beauty.Chicago is a city of diverse and vibrant neighborhoods, each with its own unique character, history, and culture. From the towering skyscrapers of the Loop to the artistic streets of Pilsen, and the historic brownstones of Lincoln Park to the lively music scene in Uptown, Chicago’s neighborhoods reflect a rich tapestry of communities. The South Side boasts deep cultural and historical significance, while the North Side features bustling commercial districts. The West Side is home to thriving arts and culinary scenes. Whether exploring Chinatown, Little Italy, or Bronzeville, Chicago’s neighborhoods offer a dynamic mix of tradition and modernity.',
-    authors: [
-      { name: 'D Yordanov', avatar: '/' ,time:'March 14, 2025'},
-    ],
-  },
-  {
-    image:'/images/24hours_sign.gif',
-    tag: 'Bars',
-    title: 'Bars',
-    content:
-    `Here are five popular bars in Chicago that are great for sightseeing while enjoying a drink: \n 1. **The Signature Lounge at the 95th**  
-Located on the 95th floor of the John Hancock Center, this bar offers breathtaking panoramic views of the city skyline, Lake Michigan, and beyond.
 
-2. **Cindy's Rooftop**  
-With stunning views of Millennium Park and the Art Institute of Chicago, Cindy's Rooftop serves craft cocktails while providing a scenic perspective of the city's downtown area.
-
-3. **The Aviary**  
-This upscale bar in the West Loop not only offers innovative drinks but also provides a great view of the surrounding neighborhood, adding to its vibrant atmosphere.
-
-4. **The Roof at The Wit**  
-This rooftop bar features spectacular views of the Chicago skyline, ideal for a drink while taking in the city’s architectural beauty.
-
-5. **Chicago Riverwalk Bars**  
-Located along the scenic Chicago Riverwalk, these bars offer a relaxed atmosphere and excellent views of the river and iconic bridges, perfect for a day or evening of sightseeing.
-    `,
-    authors: [
-      { name: 'D Petrov', avatar: '/' ,time:'March 18, 2025'},
-    ],
-
-  }
-];
 
 const StyledCardContent = styled(CardContent)({
   paddingBottom: "16px",
@@ -310,7 +274,7 @@ export function Search() {
             <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
               <CardMedia
                 component="img"
-                alt="Chicago Skyline"
+                alt={articles[index].tag}
                 image={articles[index].image}
                 sx={{
                   aspectRatio: "16 / 9",
@@ -336,9 +300,9 @@ export function Search() {
             articles[index]?.content.split("\n").map((x,descIndex)=>{
             const item= x
             return (
-              <ol key={descIndex}>
+              <List key={descIndex}>
               {x}
-              </ol>
+              </List>
             )
           }))}
         </Collapse>

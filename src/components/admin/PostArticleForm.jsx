@@ -25,6 +25,9 @@ const AdminComponent = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [tag, setTag] = useState('');
+    const [titleError, setTitleError] = useState(false);
+    const [titleErrorMessage, setTitlelErrorMessage] = useState('');
+    const [postError, setPostError] = useState('');
     
     const router = useRouter();
     const handleTitleChange = (e) => {
@@ -41,24 +44,26 @@ const AdminComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Basic validation
-        if (!title || !content || !tag) {
-            setSnackbarMessage('Title, tag and content are required.');
-            setOpenSnackbar(true);
+        if (titleError ) {
             return;
-        }
+        };
+        setPostError('');
+        // Basic validation
+        // if (!title || !content || !tag) {
+        //     setSnackbarMessage('Title, tag and content are required.');
+        //     setOpenSnackbar(true);
+        //     return;
+        // }
 
         const fd = new FormData(e.currentTarget);
         const data = Object.fromEntries(fd);
-        data.user = JSON.parse(localStorage.getItem('userData')).isAdmin;
+               
         // hardcoded data
         data.author={};
         data.author.name = JSON.parse(localStorage.getItem('userData')).name;
-        data.author.avatar = "https://avatar.iran.liara.run/public"
+        data.author.avatar = "https://avatar.iran.liara.run/public";
 
         try {
-            console.log(data);
             
             await requestMethods.postArticle(data)
             // Reset form
@@ -68,9 +73,13 @@ const AdminComponent = () => {
             setSnackbarMessage('Article posted successfully!');
             setOpenSnackbar(true);
 
-            router.push('/');
+            setTimeout(()=>{
+                router.push('/');
+            },1500);
+
         } catch (error) {
             console.error('Error posting article:', error);
+            setPostError(error.message || 'Posting of article failed')
             setSnackbarMessage('Failed to post article.');
             setOpenSnackbar(true);
         }

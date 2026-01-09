@@ -15,13 +15,17 @@ import {
     CardActions
 } from '@mui/material';
 import PostArticleForm from "@/components/admin/PostArticleForm"
+import AdminFeatures from "../admin/components/Features";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 export default function AdminComponent(props) {
     const {isLoggedIn, logout, user} = useContext(AuthContext);
 
     return (
         <Container maxWidth="md">
-        <Box mt={4}>
+        {/* <AdminFeatures /> */}
+        <Box mt={4} >
             <Card>
                 <CardContent>
                     <Typography variant="h5" component="div">
