@@ -11,6 +11,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useState } from "react";
 import LogTable from "@/components/log-table/LogTable";
+import ArticlesTable from "@/components/articles-table/ArticlesTable";
 
 export default function AdminPanel(props) {
   const [value, setValue] = useState(0);
@@ -48,7 +49,7 @@ export default function AdminPanel(props) {
         <Box sx={{ mt: 2 }}>
         {value === 0 && <AdminComponent />}
         {value === 1 && <div></div>}
-        {value === 2 && <LogTable/>}
+        {value === 2 && <ArticlesTable/>}
         {value === 3 && <LogTable/>}
         {value === 4 && <div>Item Five Content</div>}
         {value === 5 && <div>Item Six Content</div>}

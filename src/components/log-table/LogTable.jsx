@@ -41,8 +41,6 @@ export default function LogTable() {
   const [logs, setLogs] = useState([]);
   
   const rows = logs;
-  console.log(rows);
-  
 
   useEffect(()=> {
     const getLogs = async () => {

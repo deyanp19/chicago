@@ -19,7 +19,7 @@ const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
         },
     }));
 
-const AdminComponent = () => {
+const PostArticleFormComponent = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -155,4 +155,4 @@ const AdminComponent = () => {
     );
 };
 
-export default AdminComponent;
+export default PostArticleFormComponent;
