@@ -8,6 +8,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
 import requestMethods from '../../../utils/requestMethods';
+import { Snackbar, Alert } from '@mui/material';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 
@@ -34,27 +36,39 @@ function createData(id, level, timestamp, message) {
   return { id, level, timestamp, message };
 }
 
+ 
+
 
 export default function LogTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState({ open: false, message: '', severity: 'info' });
+  
   
   const rows = logs;
+
+  const handleCloseSnackbar = () => {
+          setOpenSnackbar(false);
+      };
 
   useEffect(()=> {
     const getLogs = async () => {
         const data={};
-        
+        setLoading(true);
         const response = await requestMethods.postLog(data);
         if (response.ok) {
             const logData = await response.json();
             setLogs(logData);
         } else {
-            throw new Error(`Getting logs failed: ${response.status} - ${await response.text()}`);
+            // throw new Error(`Getting logs failed: ${response.status} - ${await response.text()}`);
+            setSnackbarMessage(` ${await response.text()}. Log in again!`);
+            setOpenSnackbar(true);
         }
 
-        return response;
+      
     }
     getLogs();
 
@@ -70,6 +84,17 @@ export default function LogTable() {
   };
     return (
  <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+         {/* Snackbar for displaying messages */}
+              <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+            
+
+                  <Alert onClose={handleCloseSnackbar} severity="warning" sx={{ width: '100%' }}
+                  variant='outlined' color="error">
+                    <AlertTitle>Warning</AlertTitle>
+                      {snackbarMessage} 
+                  </Alert>
+              
+              </Snackbar>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

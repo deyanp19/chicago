@@ -37,6 +37,22 @@ async function postArticle(data) {
   return result;
 }
 
+async function deleteArticles(data) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+    body: JSON.stringify({"ids":data}),
+  };
+  
+  const result = await fetch(ApiUrl + "api/posts", options);
+
+  return result;
+}
+
 async function loginRequest(data) {
   const options = {
     method: "POST",
@@ -90,7 +106,7 @@ export default {
   getRequest,
   postArticle,
   updateRequest,
-  deleteRequest,
+  deleteArticles,
   loginRequest,
   signUpRequest,
 };

@@ -6,9 +6,10 @@ const {Post} = require('../models/post');
 const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../middleware/validateObjectId');
+const mongoose = require('mongoose');
 
 router.get('/',  async (req,res) => {
-    const posts = await Post.find().sort([['dateCreated', -1]]).limit(30);
+    const posts = await Post.find({ status: { $ne: 'deleted' } }).sort([['dateCreated', -1]]).limit(30);
     res.send(posts);
 });
 
@@ -33,4 +34,33 @@ router.post('/', auth, admin, async (req,res) => {
     res.send(_.pick(post,['id','title','author','dateCreated']));
 });
 
+router.delete('/', auth, admin, async (req,res) => {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ message: 'ids must be a non-empty array' });
+}
+
+    const objectIds = ids.filter(id => mongoose.Types.ObjectId.isValid(id))
+    .map(id => new mongoose.Types.ObjectId(id));
+    
+    console.log(objectIds);
+    const result = await Post.updateMany(
+        {
+        _id: { $in: objectIds },
+        status: { $ne: 'deleted' }
+        },
+        {
+        $set: {
+            status: 'deleted',
+            deletedAt: new Date()
+        }
+        }
+    );
+
+    return res.status(204).json({
+        matched: result.matchedCount,
+        modified: result.modifiedCount
+    });
+})
 module.exports = router;

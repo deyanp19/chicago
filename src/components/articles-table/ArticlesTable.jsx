@@ -21,32 +21,13 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { useState, useEffect } from 'react';
+import { Snackbar, Alert, AlertTitle, CircularProgress } from '@mui/material';
+
 import requestMethods from '../../../utils/requestMethods';
-import formatCST from '../../../utils/dateFormat';
-
-
-function createData(id,title, tag, author, created, content) {
-   
-
-  return {
-    id,
-    title,
-    tag,
-    author,
-    created,
-    content
-  };
-}
-
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
+  if (b[orderBy] < a[orderBy]) return -1;
+  if (b[orderBy] > a[orderBy]) return 1;
   return 0;
 }
 
@@ -57,41 +38,16 @@ function getComparator(order, orderBy) {
 }
 
 const headCells = [
-  {
-    id: 'title',
-    numeric: false,
-    disablePadding: true,
-    label: 'Title',
-  },
-  {
-    id: 'tag',
-    numeric: false,
-    disablePadding: false,
-    label: 'Tag',
-  },
-  {
-    id: 'author',
-    numeric: true,
-    disablePadding: false,
-    label: 'Author',
-  },
-  {
-    id: 'dateCreated',
-    numeric: true,
-    disablePadding: false,
-    label: 'Created on',
-  },
-  {
-    id: 'content',
-    numeric: true,
-    disablePadding: false,
-    label: 'Content',
-  },
+  { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
+  { id: 'tag', numeric: false, disablePadding: false, label: 'Tag' },
+  { id: 'author', numeric: false, disablePadding: false, label: 'Author' },
+  { id: 'created', numeric: false, disablePadding: false, label: 'Created on' },
+  { id: 'content', numeric: false, disablePadding: false, label: 'Content preview' },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -105,9 +61,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
+            inputProps={{ 'aria-label': 'select all articles' }}
           />
         </TableCell>
         {headCells.map((headCell) => (
@@ -145,8 +99,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+function EnhancedTableToolbar({ numSelected, onDelete }) {
   return (
     <Toolbar
       sx={[
@@ -155,33 +108,23 @@ function EnhancedTableToolbar(props) {
           pr: { xs: 1, sm: 1 },
         },
         numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         },
       ]}
     >
       {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
+        <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
           Articles
         </Typography>
       )}
+
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
+        <Tooltip title="Delete selected">
+          <IconButton onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -195,61 +138,79 @@ function EnhancedTableToolbar(props) {
     </Toolbar>
   );
 }
-const formatISODate = (value) => {
-  if (!value) return "";
-  console.log(value);
-  
-  return new Date(value).toISOString().slice(0, 10);
+
+const formatDate = (isoString) => {
+  if (!isoString) return '—';
+  try {
+    return new Date(isoString).toLocaleDateString('en-GB', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  } catch {
+    return 'Invalid date';
+  }
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+const truncate = (str, max = 80) => (str?.length > max ? str.substring(0, max) + '...' : str || '');
 
 export default function ArticlesTable() {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
-  const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [articles, setArticles ] = useState([]);
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('created');
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const rows = articles.map((x,i)=>{
-    return {
-        id:i+1,
-        title:x.title,
-        tag:x.tag,
-        author:x.author[0].name || "",
-        created:formatISODate(x.dateCreated),
-        content:x.content.slice(0,100) || ""
-    }
-  })
-// const rows = [
-//   createData(1, 'Cupcake', 305, 3.7, 67, 4.3),
-//   createData(2, 'Donut', 452, 25.0, 51, 4.9),
-//   {id:2,title:'krava',tag:234,author:"muymu",created:234,content:234}
+  const [articles, setArticles] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [snackbar, setSnackbar] = React.useState({ open: false, message: '', severity: 'info' });
 
-// ];
-  console.log(rows);
-  
-    useEffect(()=> {
-      const getArticles = async () => {
-          const data={};
-          
-          const response = await requestMethods.getRequest('api/posts');
-          if (response.ok) {
-              const logData = await response.json();
-              setArticles(logData);
-          } else {
-              throw new Error(`Getting logs failed: ${response.status} - ${await response.text()}`);
-          }
-  
-          return response;
+  const rows = React.useMemo(
+    () =>
+      articles.map((article) => ({
+        id: article._id || article.id, // ← Use real unique ID from backend!
+        title: article.title || 'No title',
+        tag: article.tag || '—',
+        author: article.author?.[0]?.name || article.author?.name || 'Unknown',
+        created: formatDate(article.dateCreated || article.createdAt),
+        content: truncate(article.content),
+      })),
+    [articles]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.
+  );
+
+  //work with this function to create filter conditions and do present it.
+  // const filteredData = articles.filter((rows) =>
+  //     rows.title.toLowerCase().includes(filterText.toLowerCase())
+  //   );
+
+
+  React.useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const response = await requestMethods.getRequest('api/posts');
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch articles: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setArticles(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error(err);
+        setSnackbar({
+          open: true,
+          message: 'Failed to load articles',
+          severity: 'error',
+        });
+      } finally {
+        setLoading(false);
       }
-      getArticles();
-  
-  },[]);
+    };
+
+    fetchArticles();
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -279,47 +240,86 @@ export default function ArticlesTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
+
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const handleDeleteSelected = async () => {
+    if (selected.length === 0) return;
+
+    if (!window.confirm(`Delete ${selected.length} article(s)?`)) return;
+
+    try {
+      // You should implement bulk delete endpoint
+      // This is just an example – adjust according to your API
+      await Promise.all(
+        selected.map((id) => requestMethods.deleteArticles(selected))
+      );
+      console.log(selected)
+      setArticles((prev) => prev.filter((item) => !selected.includes(item._id || item.id)));
+      setSelected([]);
+
+      setSnackbar({
+        open: true,
+        message: `Successfully deleted ${selected.length} article(s)`,
+        severity: 'success',
+      });
+    } catch (err) {
+      console.error(err);
+      setSnackbar({
+        open: true,
+        message: 'Failed to delete selected articles',
+        severity: 'error',
+      });
+    }
   };
 
+  const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const visibleRows = React.useMemo(
     () =>
       [...rows]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [order, orderBy, page, rowsPerPage],
+    [rows, order, orderBy, page, rowsPerPage]
   );
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={5000}
+          onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
+        >
+          <Alert
+            onClose={() => setSnackbar((s) => ({ ...s, open: false }))}
+            severity={snackbar.severity}
+            variant="filled"
+            sx={{ width: '100%' }}
           >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+
+        <EnhancedTableToolbar numSelected={selected.length} onDelete={handleDeleteSelected} />
+        <TableContainer>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -348,40 +348,24 @@ export default function ArticlesTable() {
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
-                        inputProps={{
-                          'aria-labelledby': labelId,
-                        }}
+                        inputProps={{ 'aria-labelledby': labelId }}
                       />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
+                    <TableCell component="th" id={labelId} scope="row" padding="none">
                       {row.title}
                     </TableCell>
-                    <TableCell align="right">{row.tag}</TableCell>
-                    <TableCell align="right">{row.author}</TableCell>
-                    <TableCell align="right">{row.created}</TableCell>
-                    <TableCell align="right">{row.content}</TableCell>
+                    <TableCell>{row.tag}</TableCell>
+                    <TableCell>{row.author}</TableCell>
+                    <TableCell>{row.created}</TableCell>
+                    <TableCell>{row.content}</TableCell>
                   </TableRow>
                 );
               })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -390,8 +374,9 @@ export default function ArticlesTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
       <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        control={<Switch checked={dense} onChange={(e) => setDense(e.target.checked)} />}
         label="Dense padding"
       />
     </Box>

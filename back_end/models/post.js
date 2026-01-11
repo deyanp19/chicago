@@ -39,6 +39,15 @@ const PostSchema = new mongoose.Schema({
     timeCreated: {
         type: String,
         default: new Date().toLocaleTimeString()
+    },
+    status:{
+        type: String,
+        enum: ['draft', 'published', 'archived', 'deleted'],
+        default: 'draft'
+    },
+    deletedAt: {
+        type: Date,
+        default: null
     }
 });
 
