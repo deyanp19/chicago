@@ -1,8 +1,5 @@
 const config = require('config');
-const jwt = require('jsonwebtoken');
-const Joi = require('joi');
 const mongoose = require('mongoose');
-const { time } = require('console');
 
 const AuthorsSchema = new mongoose.Schema({
         name:String,
@@ -42,6 +39,15 @@ const PostSchema = new mongoose.Schema({
     timeCreated: {
         type: String,
         default: new Date().toLocaleTimeString()
+    },
+    status:{
+        type: String,
+        enum: ['draft', 'published', 'archived', 'deleted'],
+        default: 'draft'
+    },
+    deletedAt: {
+        type: Date,
+        default: null
     }
 });
 

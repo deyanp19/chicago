@@ -5,6 +5,21 @@ async function getRequest(endpoint, jwt) {
   return result;
 }
 
+async function postLog(data) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+    body: JSON.stringify(data),
+  };
+  const result = await fetch(ApiUrl + "api/logs", options);
+
+  return result;
+}
+
 async function postArticle(data) {
   const options = {
     method: "POST",
@@ -15,6 +30,24 @@ async function postArticle(data) {
     },
     body: JSON.stringify(data),
   };
+  console.log('options from rm ln 34- ', options);
+  
+  const result = await fetch(ApiUrl + "api/posts", options);
+
+  return result;
+}
+
+async function deleteArticles(data) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+    body: JSON.stringify({"ids":data}),
+  };
+  
   const result = await fetch(ApiUrl + "api/posts", options);
 
   return result;
@@ -69,10 +102,11 @@ async function updateRequest(data) {}
 async function deleteRequest(id) {}
 
 export default {
+  postLog,
   getRequest,
   postArticle,
   updateRequest,
-  deleteRequest,
+  deleteArticles,
   loginRequest,
   signUpRequest,
 };
