@@ -36,7 +36,7 @@ router.post('/', auth, admin, async (req,res) => {
 
 router.delete('/', auth, admin, async (req,res) => {
     const { ids } = req.body;
-
+    console.log(ids)
     if (!Array.isArray(ids) || ids.length === 0) {
     return res.status(400).json({ message: 'ids must be a non-empty array' });
 }

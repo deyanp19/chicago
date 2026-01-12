@@ -8,7 +8,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
 import requestMethods from '../../../utils/requestMethods';
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert, CircularProgress, Box } from '@mui/material';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
@@ -48,6 +48,7 @@ export default function LogTable() {
   const [snackbarMessage, setSnackbarMessage] = useState({ open: false, message: '', severity: 'info' });
   
   
+  
   const rows = logs;
 
   const handleCloseSnackbar = () => {
@@ -56,10 +57,12 @@ export default function LogTable() {
 
   useEffect(()=> {
     const getLogs = async () => {
+      try {
+         setLoading(true);
         const data={};
         setLoading(true);
         const response = await requestMethods.postLog(data);
-        if (response.ok) {
+          if (response.ok) {
             const logData = await response.json();
             setLogs(logData);
         } else {
@@ -67,6 +70,19 @@ export default function LogTable() {
             setSnackbarMessage(` ${await response.text()}. Log in again!`);
             setOpenSnackbar(true);
         }
+      } catch (error) {
+        console.error(error);
+        setSnackbarMessage({
+          open: true,
+          message: 'Failed to load articles',
+          severity: 'error',
+        });
+      } finally {
+        setLoading(false);
+    
+      }
+       
+      
 
       
     }
@@ -82,6 +98,13 @@ export default function LogTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+    if (loading) {
+      return (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
+          <CircularProgress />
+        </Box>
+      );
+    }
     return (
  <Paper sx={{ width: '100%', overflow: 'hidden' }}>
          {/* Snackbar for displaying messages */}

@@ -313,6 +313,7 @@ export default function ArticlesTable() {
             variant="filled"
             sx={{ width: '100%' }}
           >
+            <AlertTitle >Warning</AlertTitle>
             {snackbar.message}
           </Alert>
         </Snackbar>
