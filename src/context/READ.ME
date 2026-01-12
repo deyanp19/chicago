@@ -1,0 +1,53 @@
+This file is a React context provider that manages authentication state, including login, logout, and token verification. It's using React hooks like useState and useEffect to handle state and side effects.
+
+Parameters:
+credentials: This is expected to be an object with a .get() method (e.g., a FormData object from a form submission). It extracts the user's email and password.
+What it does:
+It calls requestMethods.loginRequest, which appears to be a custom utility function (likely defined in ../../utils/requestMethods.js) for making API calls. This function is passed an object with the email and password, plus a string 'api/auth', which might be the endpoint or a base path.
+It waits for the response from the server using await.
+It logs the response to the console for debugging purposes.
+It extracts a token from the response headers using data.headers.get('x-auth-token'). (Note: The code assigns the response to data, but it's the same as response, which could be simplified.)
+If the response is successful (response.ok is true and a token is present), it:
+Stores the token in the browser's local storage using localStorage.setItem('authToken', token).
+Updates the state by setting token and isLoggedIn to true.
+If the login fails, it throws a generic error ('Login failed'), which can be caught by calling code to handle the failure (e.g., showing an error message to the user).
+
+Security Considerations:
+Storing the token in local storage is common but not entirely secure, as it's vulnerable to XSS attacks. Consider using HttpOnly cookies or secure storage alternatives if possible.
+Ensure that requestMethods.loginRequest handles sensitive data (like passwords) securely, e.g., by using HTTPS.
+
+A function that calls the backend to change the state of a variable can be developed. This function verifyToken() must be called in the useEffect()
+
+
+``` 
+
+    if (storedToken) {
+      verifyToken(storedToken);  // Verify the token
+    }
+
+
+
+```
+
+
+```
+
+  const verifyToken = async (token) => {
+    try {
+      const response = await fetch('/api/auth/verify', {  // Optional: Add a verify endpoint if needed
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (response.ok) {
+        setIsLoggedIn(true);
+        setToken(token);
+      } else {
+        logout();  // Token is invalid or expired
+      }
+    } catch (error) {
+      console.error('Token verification error:', error);
+      logout();
+    }
+  };
+
+  ```

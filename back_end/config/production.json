@@ -1,6 +1,6 @@
 {
     "jwtPrivateKey": "testJwtSecretKey",
     "db":"mongodb://localhost:27017/chicagotours",
-    "PORT": 3002
-  
+    "PORT": 3002,
+    "URI":"https://chicagotours.site"
   }

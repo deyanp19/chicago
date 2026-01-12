@@ -23,7 +23,17 @@ const userSchema = new mongoose.Schema({
         minlength: 3,
         maxlength: 1024
     },
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    // {{change 1}} Add profilePicture field
+    profilePicture: {
+        type: String,  // Stores the path or URL to the image, e.g., '/uploads/profile.jpg'
+        default: null  // Optional, can be null if no picture is uploaded
+    },
+    address:{
+        type: String,
+        default: null,
+        
+    }
 })
 
 

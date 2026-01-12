@@ -1,12 +1,10 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-import AppTheme from '@/components/shared-theme/AppTheme';
-import AppAppBar from '@/components/shared-theme/AppAppBar';
-import MainContent from '@/components/shared-theme/MainContent';
-import Latest from '@/components/shared-theme/Latest';
-import Footer from '@/components/shared-theme/Footer';
-import MarketingPage from '@/components/marketing-page/MarketingPage';
+import AppTheme from '@components/AppTheme';
+import AppAppBar from '@components/AppAppBar';
+import Footer from '@components/Footer';
+import MarketingComponent from '@/components/marketing-page/MarketingComponent.jsx';
 
 export default function Blog(props) {
   return (
@@ -18,7 +16,7 @@ export default function Blog(props) {
         component="main"
         sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
       >
-      <MarketingPage />
+      <MarketingComponent />
       </Container>
       <Footer />
     </AppTheme>
