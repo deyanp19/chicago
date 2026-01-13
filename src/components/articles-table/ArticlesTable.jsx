@@ -173,7 +173,12 @@ export default function ArticlesTable() {
         title: article.title || 'No title',
         tag: article.tag || '—',
         author: article.author?.[0]?.name || article.author?.name || 'Unknown',
-        created: formatDate(article.dateCreated || article.createdAt),
+        created: formatDate(article.dateCreated || article.createdAt)+(article.dateCreated
+  ? ' ' + new Date(article.dateCreated).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  : '--'),
         content: truncate(article.content),
       })),
     [articles]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.

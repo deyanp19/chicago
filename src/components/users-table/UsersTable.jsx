@@ -22,7 +22,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { Snackbar, Alert, AlertTitle, CircularProgress } from '@mui/material';
-
+import {
+  Menu,
+  MenuItem,
+} from '@mui/material';
+import { useState } from 'react';
 import requestMethods from '../../../utils/requestMethods';
 
 function descendingComparator(a, b, orderBy) {
@@ -41,7 +45,7 @@ const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   { id: 'isAdmin', numeric: false, disablePadding: false, label: 'Admin-Yes/No' },
-   { id: 'dateCreated', numeric: false, disablePadding: false, label: 'Date Created' },
+   { id: 'dateCreated', numeric: false, disablePadding: false, label: 'Last Login' },
   { id: 'profilePicture', numeric: false, disablePadding: false, label: 'Profile Picture' },
   { id: 'address', numeric: false, disablePadding: false, label: 'Address' },
   {id: 'deletedAt',numeric: false,  disablePadding: false, label: 'Deleded At'}
@@ -101,7 +105,17 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar({ numSelected, onDelete }) {
+function EnhancedTableToolbar({ numSelected, onDelete, onFilter }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [filter, setFilter] = useState('all');
+  const open = Boolean(anchorEl);
+
+
+  const handleFilter = ()=> onFilter(filter);
+
+  React.useEffect(()=>{
+    handleFilter();
+  },[filter])
   return (
     <Toolbar
       sx={[
@@ -120,7 +134,7 @@ function EnhancedTableToolbar({ numSelected, onDelete }) {
         </Typography>
       ) : (
         <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          Articles
+          Users
         </Typography>
       )}
 
@@ -131,10 +145,16 @@ function EnhancedTableToolbar({ numSelected, onDelete }) {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
+        <Tooltip   enterDelay={500} leaveDelay={200}>
+          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
             <FilterListIcon />
           </IconButton>
+
+          <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+          <MenuItem onClick={(e) => {e.stopPropagation(); setFilter('all'); setAnchorEl(null)}}>All</MenuItem>
+          <MenuItem onClick={(e) => {e.stopPropagation(); setFilter('active'); setAnchorEl(null)}}>Active</MenuItem>
+          <MenuItem onClick={(e) => {e.stopPropagation(); setFilter('deleted'); setAnchorEl(null)}}>Deleted</MenuItem>
+        </Menu>
         </Tooltip>
       )}
     </Toolbar>
@@ -167,22 +187,38 @@ export default function UsersTable() {
   const [users, setUsers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [snackbar, setSnackbar] = React.useState({ open: false, message: '', severity: 'info' });
+  const [filterMode, setFilterMode] = React.useState('all'); // 'all' | 'active' | 'deleted'
 
-  const rows = React.useMemo(
-    () =>
-      users.map((user) => ({
+  const rows = React.useMemo(() =>{
+      let filteredUsers = users;
+    if (filterMode === 'active') {
+    filteredUsers = users.filter(u =>u.status===filterMode);
+    console.log(filteredUsers)
+
+  } else if (filterMode === 'deleted') {
+    filteredUsers = users.filter(u => u.status===filterMode);
+    console.log(filteredUsers)
+  }
+
+  return filteredUsers.map((user) => ({
         id: user._id || user.id, // ← Use real unique ID from backend!
         name: user.name || 'No name',
         email: user.email || '—',
         isAdmin: user.isAdmin || 'Unknown',
-        dateCreated: formatDate(user.dateCreated || user.createdAt),
-        profilePitcture: user.profilePitcure,
+        dateCreated: formatDate(user.dateCreated || user.createdAt) +(user.dateCreated
+  ? ' ' + new Date(user.dateCreated).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  : '--'),
+        profilePicture: user.profilePicture,
         address: truncate(user.address),
         deletedAt: formatDate(user.deletedAt)
-      })),
-    [users]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.
-  );
-
+      }))},
+    [users, filterMode]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.
+   );
+ console.log(rows);
+ 
   //work with this function to create filter conditions and do present it.
   // const filteredData = users.filter((rows) =>
   //     rows.title.toLowerCase().includes(filterText.toLowerCase())
@@ -283,6 +319,20 @@ export default function UsersTable() {
     }
   };
 
+        const handleFilterChange = (newFilter) => {
+          setFilterMode(newFilter);
+          console.log(filterMode);
+          
+          setPage(0); // reset to first page after filter change
+          setSelected([]); // good practice to clear selection after filter
+
+          setSnackbar({
+            open: true,
+            message: `Showing: ${newFilter === 'all' ? 'All users' : newFilter === 'active' ? 'Active users' : 'Deleted users'}`,
+            severity: 'info',
+            autoHideDuration: 2400
+          });
+        };
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -294,7 +344,7 @@ export default function UsersTable() {
       [...rows]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [rows, order, orderBy, page, rowsPerPage]
+    [rows, order, orderBy, page, rowsPerPage, filterMode]
   );
   
   if (loading) {
@@ -324,7 +374,7 @@ export default function UsersTable() {
           </Alert>
         </Snackbar>
 
-        <EnhancedTableToolbar numSelected={selected.length} onDelete={handleDeleteSelected} />
+        <EnhancedTableToolbar users={users} numSelected={selected.length} onDelete={handleDeleteSelected} onFilter={handleFilterChange} filterText={'active'}/>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
@@ -364,7 +414,10 @@ export default function UsersTable() {
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.isAdmin === true ? 'Yes' : 'No'}</TableCell>
                     <TableCell>{row.dateCreated}</TableCell>
-                    <TableCell>{row.profilePitcure}</TableCell>
+                    <TableCell>{row.profilePicture ? (
+                         <img src={row.profilePicture} alt="avatar" style={{ width: 40, height: 40, borderRadius: '50%', objectFit: 'cover' }} />
+                                    ) :  '—'}
+                    </TableCell>
                     <TableCell>{row.address}</TableCell>
                     <TableCell>{row.deletedAt}</TableCell>
 

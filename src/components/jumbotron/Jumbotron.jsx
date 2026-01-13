@@ -1,6 +1,5 @@
 
 export default function Jumbotron({children,image,title,text}){
-
     return (
         <div className="mt-4 p-5 shadow   rounded">
            

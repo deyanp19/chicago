@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useState } from 'react';
-import Alert from '@mui/material/Alert';
+import { Snackbar, Alert, AlertTitle, CircularProgress } from '@mui/material';
 
 
 
@@ -74,7 +74,7 @@ export default function SignIn(props) {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [open, setOpen] = useState(false);
   const [loginError, setLoginError] = useState('');  // State for login errors
-
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
 
   const router = useRouter();
@@ -95,13 +95,17 @@ export default function SignIn(props) {
     setLoginError('');  // Clear any previous error before attempting login
     const data = new FormData(event.currentTarget);
       try {
-       await login(data);
-  
-       router.push('/marketing')
+        setLoading(true);
+
+        await login(data);
+        setLoading(false);
+        router.push('/marketing')
         
       } catch (error) {
         console.error('Login error:', error);
         setLoginError(error.message || 'Login failed. Please try again.');  // Set error state with a user-friendly message
+      } finally {
+       
       }
     
   };
@@ -132,7 +136,13 @@ export default function SignIn(props) {
 
     return isValid;
   };
-
+ if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
   return (
     <>
       <CssBaseline enableColorScheme />

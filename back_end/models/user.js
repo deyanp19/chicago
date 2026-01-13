@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    timeCreated: {
+        type: String,
+        default: () => new Date().toLocaleTimeString()
+        },
     deletedAt: {
         type: Date,
         default: null
