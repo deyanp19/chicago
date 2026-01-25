@@ -17,7 +17,7 @@ export default function Blog(props) {
           component="main"
           sx={{ display: 'flex', flexDirection: 'column', my: 16, gap: 4 }}
         >
-            <h3>This is not present page</h3>
+            <h3>This is not existing page</h3>
           {/* <MainContent /> */}
           {/* <Latest /> */}
         </Container>

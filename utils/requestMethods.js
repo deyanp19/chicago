@@ -19,6 +19,49 @@ async function getUsers(data) {
 
   return result;
 }
+
+async function getArticles(id) {
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+  };
+  const result = await fetch(ApiUrl + `api/posts/${id}`, options);
+
+  return result;
+};
+
+async function getArticlePicture(filename) {
+  const options = {
+    method: "GET",
+    headers: {
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+  };
+
+  const result = await fetch(ApiUrl + `/images/uploaded_pic?filename=${filename}`,options);
+  
+  return result;
+}
+
+async function postUpload(data) {
+  const options = {
+    method: "POST",
+    headers: {
+      Accept: "*/*",
+      "x-auth-token": localStorage.getItem('authToken')
+    },
+    body: data,
+  };
+  const result = await fetch(ApiUrl + "api/uploads", options);
+
+  return result;
+};
+
 async function postLog(data) {
   const options = {
     method: "POST",
@@ -44,7 +87,6 @@ async function postArticle(data) {
     },
     body: JSON.stringify(data),
   };
-  console.log('options from rm ln 34- ', options);
   
   const result = await fetch(ApiUrl + "api/posts", options);
 
@@ -141,4 +183,6 @@ export default {
   deleteUsers,
   loginRequest,
   signUpRequest,
+  postUpload,
+  getArticlePicture
 };

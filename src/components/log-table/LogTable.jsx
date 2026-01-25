@@ -62,6 +62,7 @@ export default function LogTable() {
         const data={};
         setLoading(true);
         const response = await requestMethods.postLog(data);
+        setLoading(false);
           if (response.ok) {
             const logData = await response.json();
             setLogs(logData);
@@ -78,7 +79,6 @@ export default function LogTable() {
           severity: 'error',
         });
       } finally {
-        setLoading(false);
     
       }
        

@@ -1,5 +1,6 @@
 const winston = require('winston')
 const express = require('express');
+
 const app = express();
 const logging = require('./startup/logging');
 
@@ -8,13 +9,13 @@ const logging = require('./startup/logging');
 
 const config = require('config');
 
-
 require('./startup/logging')();
 require('./startup/routes')(app);
 require('./startup/db')();
 require('./startup/config')();
 require('./startup/validation')();
 require('./startup/prod')(app);
+
 
  
 

@@ -195,7 +195,8 @@ export default function ArticlesTable() {
       try {
         setLoading(true);
         const response = await requestMethods.getRequest('api/posts');
-
+        setLoading(false);
+        
         if (!response.ok) {
           throw new Error(`Failed to fetch articles: ${response.status}`);
         }
@@ -210,7 +211,6 @@ export default function ArticlesTable() {
           severity: 'error',
         });
       } finally {
-        setLoading(false);
       }
     };
 

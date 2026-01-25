@@ -197,7 +197,6 @@ export default function UsersTable() {
 
   } else if (filterMode === 'deleted') {
     filteredUsers = users.filter(u => u.status===filterMode);
-    console.log(filteredUsers)
   }
 
   return filteredUsers.map((user) => ({
@@ -217,7 +216,6 @@ export default function UsersTable() {
       }))},
     [users, filterMode]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.
    );
- console.log(rows);
  
   //work with this function to create filter conditions and do present it.
   // const filteredData = users.filter((rows) =>
@@ -230,6 +228,7 @@ export default function UsersTable() {
       try {
         setLoading(true);
         const response = await requestMethods.getUsers();
+        setLoading(false);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch users: ${response.status}`);
@@ -245,7 +244,6 @@ export default function UsersTable() {
           severity: 'error',
         });
       } finally {
-        setLoading(false);
       }
     };
 
@@ -321,8 +319,6 @@ export default function UsersTable() {
 
         const handleFilterChange = (newFilter) => {
           setFilterMode(newFilter);
-          console.log(filterMode);
-          
           setPage(0); // reset to first page after filter change
           setSelected([]); // good practice to clear selection after filter
 

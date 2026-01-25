@@ -14,7 +14,6 @@ router.get('/',  async (req,res) => {
 });
 
 router.get('/:id', auth, validateObjectId, async (req,res)=> {
-    // here post refers to the article in the db
     const post = await Post.findById(req.params.id);
 
     if (!post) return res.status(404).send('The given article id is not valid');
@@ -23,15 +22,13 @@ router.get('/:id', auth, validateObjectId, async (req,res)=> {
 
 router.post('/', auth, admin, async (req,res) => {
     
-    // here post refers to the article in the db
-    
     let post = await Post.findOne({title: req.body.title});
     if (post) return res.status(400).send('There is article with this title');
 
     post = new Post(_.pick(req.body, ['title','content','author','image','tag']));
     
     await post.save();
-    res.send(_.pick(post,['id','title','author','dateCreated']));
+    res.send(_.pick(post,['id','title','author','dateCreated','image']));
 });
 
 router.delete('/', auth, admin, async (req,res) => {

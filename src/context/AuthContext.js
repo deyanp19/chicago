@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);  // Store the token for persistence
   const [user, setUser] = useState({});
+  const [articleFileName, setArticleFileName] = useState(null);
 
   // Check for token on component mount
   useEffect(() => {
@@ -53,9 +54,22 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('userData');
   };
 
+  const uploadFileName = async (data) => {
+ 
+    const response = await requestMethods.postUpload(data);
+  
+    if (response.ok ) { 
+      const fileName = await response.json();
+      setArticleFileName(fileName.filename)
+      return response;
+     
+    } else {
+      throw new Error(`postUpload failed: ${response.status} - ${await response.text()}`); 
+    }
+};
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn,user, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn,user, login, logout, uploadFileName, articleFileName}}>
       {children}
     </AuthContext.Provider>
   );

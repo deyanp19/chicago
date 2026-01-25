@@ -75,6 +75,7 @@ export default function SignIn(props) {
   const [open, setOpen] = useState(false);
   const [loginError, setLoginError] = useState('');  // State for login errors
   const [loading, setLoading] = useState(false);
+  
   const { login } = useContext(AuthContext);
 
   const router = useRouter();

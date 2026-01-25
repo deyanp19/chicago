@@ -4,6 +4,7 @@ const auth = require('../routes/auth');
 const users = require('../routes/users');
 const posts = require('../routes/posts');
 const logs = require('../routes/logs');
+const upload = require('../routes/uploads');
 const cors = require('cors');
 const express = require('express');
 const config = require('config');
@@ -23,6 +24,7 @@ module.exports = function(app) {
     app.use('/api/users/', users);
     app.use('/api/posts/', posts);
     app.use('/api/logs', logs);
+    app.use('/api/uploads', upload)
 
     
     // not calling the function error, just referencing
