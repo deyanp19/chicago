@@ -173,7 +173,12 @@ export default function ArticlesTable() {
         title: article.title || 'No title',
         tag: article.tag || '—',
         author: article.author?.[0]?.name || article.author?.name || 'Unknown',
-        created: formatDate(article.dateCreated || article.createdAt),
+        created: formatDate(article.dateCreated || article.createdAt)+(article.dateCreated
+  ? ' ' + new Date(article.dateCreated).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  : '--'),
         content: truncate(article.content),
       })),
     [articles]//this trigers change of the useMemo, so it is not freezing the data. this way the state updates the useMemo() hook.
@@ -190,7 +195,8 @@ export default function ArticlesTable() {
       try {
         setLoading(true);
         const response = await requestMethods.getRequest('api/posts');
-
+        setLoading(false);
+        
         if (!response.ok) {
           throw new Error(`Failed to fetch articles: ${response.status}`);
         }
@@ -205,7 +211,6 @@ export default function ArticlesTable() {
           severity: 'error',
         });
       } finally {
-        setLoading(false);
       }
     };
 
@@ -313,6 +318,7 @@ export default function ArticlesTable() {
             variant="filled"
             sx={{ width: '100%' }}
           >
+            <AlertTitle >Warning</AlertTitle>
             {snackbar.message}
           </Alert>
         </Snackbar>

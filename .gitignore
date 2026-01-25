@@ -7,3 +7,4 @@ back
 #.env.development
 #.env.production
 .vscode
+uploads

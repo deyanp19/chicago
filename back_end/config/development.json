@@ -2,5 +2,8 @@
     "jwtPrivateKey": "testJwtSecretKey",
     "db":"mongodb://localhost:27017/chicagotours-dev",
     "PORT": 3001,
-    "URI":"http://localhost:3000"
+    "URI":"http://localhost:3000",
+    "UPLOAD_DIR":"../public/images/uploaded_pic"
+
   }
+ 

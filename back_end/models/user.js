@@ -2,6 +2,7 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const { type } = require('os');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -33,7 +34,24 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
         
-    }
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now
+    },
+    timeCreated: {
+        type: String,
+        default: () => new Date().toLocaleTimeString()
+        },
+    deletedAt: {
+        type: Date,
+        default: null
+    },
+     status:{
+        type: String,
+        enum: ['active', 'deleted'],
+        default: 'active'
+    },
 })
 
 

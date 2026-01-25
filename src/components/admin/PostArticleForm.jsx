@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Container, Typography, TextField, Button, Snackbar, Alert } from '@mui/material';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { styled } from '@mui/material/styles';
 import requestMethods from '../../../utils/requestMethods';
+import UploadPictureForm from './UploadPictureForm';
 import { useRouter } from "next/router";
+import { AuthContext } from '@/context/AuthContext';
 
+const ArticlePicturePath = process.env.NEXT_PUBLIC_UPLOAD_DIR;
 
 const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
         width: '100%',
@@ -28,6 +31,8 @@ const PostArticleFormComponent = () => {
     const [titleError, setTitleError] = useState(false);
     const [titleErrorMessage, setTitlelErrorMessage] = useState('');
     const [postError, setPostError] = useState('');
+
+    const { articleFileName } = useContext(AuthContext);
     
     const router = useRouter();
     const handleTitleChange = (e) => {
@@ -48,12 +53,7 @@ const PostArticleFormComponent = () => {
             return;
         };
         setPostError('');
-        // Basic validation
-        // if (!title || !content || !tag) {
-        //     setSnackbarMessage('Title, tag and content are required.');
-        //     setOpenSnackbar(true);
-        //     return;
-        // }
+    
 
         const fd = new FormData(e.currentTarget);
         const data = Object.fromEntries(fd);
@@ -61,8 +61,8 @@ const PostArticleFormComponent = () => {
         // hardcoded data
         data.author={};
         data.author.name = JSON.parse(localStorage.getItem('userData')).name;
-        data.author.avatar = "https://avatar.iran.liara.run/public";
-
+        data.author.avatar = "https://cdn.jsdelivr.net/gh/alohe/memojis/png/teams_1.png";
+        data.image = ArticlePicturePath + articleFileName;
         try {
             
             await requestMethods.postArticle(data)
@@ -91,6 +91,7 @@ const PostArticleFormComponent = () => {
 
     return (
         <Container maxWidth="md">
+            <UploadPictureForm/>
             <Box
                 component="form"
                 onSubmit={handleSubmit}
@@ -116,7 +117,7 @@ const PostArticleFormComponent = () => {
                 />
                 <StyledTextarea
                     required
-                    minRows={20} maxRows="infinity" placeholder="Type here your article..."
+                    minRows={20} maxRows="150" placeholder="Type here your article..."
                     id="content"
                     label="Content"
                     name="content"

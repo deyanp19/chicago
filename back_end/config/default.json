@@ -1,5 +1,5 @@
 {
-    "jwtPrivateKey":"sdf",
+    "jwtPrivateKey":"chicagoRamboKur",
     "db":"mongodb://localhost:27017/chicagotours",
     "PORT":3000,
     "URI":"localhost:3000/"
