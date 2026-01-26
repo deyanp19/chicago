@@ -9,15 +9,19 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const config = require('config');
 
-
-
+console.log('UPLOAD_DIR value:', config.get('UPLOAD_DIR'));  //
 //====start multer file upload integration==========================
  // Create a directory for uploads if it doesn't exist
  const fs = require('fs');
  const uploadDir = config.get("UPLOAD_DIR") || path.join(__dirname, '../../public/images/uploaded_pic');
  
  if (!fs.existsSync(uploadDir)) {
-     fs.mkdirSync(uploadDir);
+    try {
+        
+        fs.mkdirSync(uploadDir);
+    } catch (error) {
+        throw new Error(`Couldnt create folder from backend uploads.js ln: 23 ${error}`);
+    }
  };
   const fileFilter = async (req, file, cb) => {
     try {
