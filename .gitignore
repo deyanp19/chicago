@@ -7,4 +7,4 @@ back
 #.env.development
 #.env.production
 .vscode
-uploads
+public/images/uploaded_pic
