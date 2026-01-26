@@ -49,6 +49,7 @@ async function getArticlePicture(filename) {
 }
 
 async function postUpload(data) {
+  console.log('deyan',Object.fromEntries(data))
   const options = {
     method: "POST",
     headers: {
