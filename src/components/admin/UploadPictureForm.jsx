@@ -18,6 +18,18 @@ export default function UploadPictureForm() {
     const { uploadFileName } = useContext(AuthContext);
     const { articleFileName } =useContext(AuthContext);
 
+    useEffect(() => {
+        if (isLoading) {
+          const timer = setTimeout(() => {
+            setIsLoading(false);  // Stop loading
+            setErrorMessage('Upload timed out after 1 minute. Please try again.');  // Set error message
+            setSnackbarMessage('Upload timed out after 1 minute.');  // Update Snackbar for user feedback
+            setOpenSnackbar(true);  // Open Snackbar to show the error
+          }, 20000);  // 1 minute in milliseconds
+      
+          return () => clearTimeout(timer);  // Cleanup timer if isLoading changes (e.g., upload completes)
+        }
+      }, [isLoading]);
  
     const handleFileChange = (event) => {
         const file = event.target.files[0];
