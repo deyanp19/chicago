@@ -62,7 +62,9 @@ router.post('/', auth,upload.single('file'), async (req,res, next) => {
         // Handle other errors (e.g., from file filter)
         if (err) {
             if (req.file) {
-                fs.unlinkSync(req.file.path);  // Delete the uploaded file on error
+                if (req.file.path) {
+                    fs.unlinkSync(req.file.path);  // {{change 1: Add check to avoid undefined path}}
+                }
             }
             return res.status(400).json({ message: `Upload error: ${err.message}` });
         }

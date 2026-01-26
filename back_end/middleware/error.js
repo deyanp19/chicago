@@ -11,6 +11,9 @@ module.exports = function(err, req, res, next){
   // verbose
   //debug
   //silly
-  res.status(500).send( {error: 'Big wrong from express-async-error; '+err})
+  res.status(500).send( {
+    error: 'Big wrong from express-async-error; '+err,
+    details: err.stack 
+  })
   next(err);
   };
