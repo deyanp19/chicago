@@ -55,11 +55,12 @@ export function AuthProvider({ children }) {
   };
 
   const uploadFileName = async (data) => {
- 
     const response = await requestMethods.postUpload(data);
-  
+    
     if (response.ok ) { 
       const fileName = await response.json();
+      console.log(fileName);
+      
       setArticleFileName(fileName.filename)
       return response;
      
