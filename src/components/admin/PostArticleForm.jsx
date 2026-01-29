@@ -7,8 +7,8 @@ import UploadPictureForm from './UploadPictureForm';
 import { useRouter } from "next/router";
 import { AuthContext } from '@/context/AuthContext';
 
-const ArticlePicturePath = process.env.NEXT_PUBLIC_READ_DIR;
 
+ 
 const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
         width: '100%',
         padding: theme.spacing(2),
@@ -57,7 +57,13 @@ const PostArticleFormComponent = () => {
 
         const fd = new FormData(e.currentTarget);
         const data = Object.fromEntries(fd);
-               
+        let ArticlePicturePath = '';
+        if (process.env.NEXT_PUBLIC_ENV === 'development') {
+
+            ArticlePicturePath = process.env.NEXT_PUBLIC_UPLOAD_DIR;
+        } else {
+            ArticlePicturePath = process.env.NEXT_PUBLIC_READ_DIR;
+        }    
         // hardcoded data
         data.author={};
         data.author.name = JSON.parse(localStorage.getItem('userData')).name;

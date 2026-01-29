@@ -19,7 +19,7 @@ export default function UploadPictureForm() {
         if (process.env.NEXT_PUBLIC_ENV === 'development') {
             setImageUrl( `/images/uploaded_pic/${articleFileName}`);
         } else {
-            setImageUrl( `/images/${articleFileName}`);
+            setImageUrl( `/res/${articleFileName}`);
         }
     },[articleFileName]);
  

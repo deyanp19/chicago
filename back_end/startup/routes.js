@@ -25,7 +25,7 @@ module.exports = function(app) {
     app.use('/api/posts/', posts);
     app.use('/api/logs', logs);
     app.use('/api/uploads', upload)
-    app.use('/api/images', express.static('/var/uploads'));
+    // app.use('/api/images', express.static('/var/uploads'));
     
     // not calling the function error, just referencing
     app.use(error);
