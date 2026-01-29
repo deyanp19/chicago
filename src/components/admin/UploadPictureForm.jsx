@@ -1,9 +1,7 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect,  useState } from 'react';
 import { Box, Button, CircularProgress, Typography, Snackbar, Alert, AlertTitle } from '@mui/material';  import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { AuthContext } from '@/context/AuthContext';
-import requestMethods from '../../../utils/requestMethods';
-
 
 export default function UploadPictureForm() {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -15,21 +13,11 @@ export default function UploadPictureForm() {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [imageUrl, setImageUrl] = useState('');
 
-    const { uploadFileName } = useContext(AuthContext);
-    const { articleFileName } =useContext(AuthContext);
+    const { articleFileName, uploadFileName } =useContext(AuthContext);
 
-    useEffect(() => {
-        if (isLoading) {
-          const timer = setTimeout(() => {
-            setIsLoading(false);  // Stop loading
-            setErrorMessage('Upload timed out after 1 minute. Please try again.');  // Set error message
-            setSnackbarMessage('Upload timed out after 1 minute.');  // Update Snackbar for user feedback
-            setOpenSnackbar(true);  // Open Snackbar to show the error
-          }, 20000);  // 1 minute in milliseconds
-      
-          return () => clearTimeout(timer);  // Cleanup timer if isLoading changes (e.g., upload completes)
-        }
-      }, [isLoading]);
+    useEffect(()=>{
+        setImageUrl( `/images/uploaded_pic/${articleFileName}`)
+    },[articleFileName]);
  
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -54,30 +42,28 @@ export default function UploadPictureForm() {
             return;
         }
 
-        setIsLoading(true);   
-        setErrorMessage('');
-        setSuccessMessage('');
-
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        try {            
-            const response = await uploadFileName(formData);
+        try {    
+            setIsLoading(true);   
+            setErrorMessage('');
+            setSuccessMessage('');
+
+            await uploadFileName(formData);
             setIsLoading(false);
-             
-            const staticImageUrl = `/images/uploaded_pic/${articleFileName}`;  // Construct static URL for Next.js
-         
-                setImageUrl(staticImageUrl);
-                setSuccessMessage('File uploaded successfully!'); 
-                
-                setSnackbarMessage(`Uploaded `);
-                setOpenSnackbar(true);
+              
+            setSuccessMessage('File uploaded successfully!'); 
+            
+            setSnackbarMessage(`Uploaded `);
+            setOpenSnackbar(true);
           
         } catch (error) {
             setErrorMessage('Not uploaded');
             console.error('Error uploading file:', error);
             setSnackbarMessage(`Upload failed: ${error}`);
             setOpenSnackbar(true);
+            setIsLoading(false)
         } 
     };
 
@@ -97,9 +83,6 @@ export default function UploadPictureForm() {
         width: 1,
       });
   
-
-
- 
     return (
         // {{change 3: Replace the div and form with MUI Box}}
         <Box sx={{ p: 3, maxWidth: 600, margin: 'auto' }}>  {/* Add some basic styling */}
@@ -108,16 +91,19 @@ export default function UploadPictureForm() {
                 <Typography variant="h4" gutterBottom>Upload File</Typography>
                 {errorMessage && <Typography color="error">{errorMessage}</Typography>}   
                 {successMessage && <Typography color="success.main">{successMessage}</Typography>}  
-                {imageUrl && <img src={imageUrl} alt="Uploaded file" style={{ maxWidth: '100%', marginTop: '16px' }} />}  
+                {console.log(imageUrl)}
+                {articleFileName  && <img src={imageUrl} alt="Uploaded file-" style={{ maxWidth: '100%', marginTop: '16px' }} />}  
          
                 
-                <form onSubmit={handleUpload} encType="multipart/form-data">
+                <form onSubmit={handleUpload} enctype="multipart/form-data" sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+                <Box sx={{ display: { xs: 'block', sm: 'flex', md: 'flex' },  // Not flex on xs and sm; flex on md and up
+  justifyContent: { md: 'space-between' },  gap: 2 }} >
                 <Button
                     component="label"
                     role={undefined}
                     variant="contained"
                     startIcon={(<CloudUploadIcon/>)}
-                    sx={{ marginBottom: '16px', marginTop: '8px', padding:'4px' }}
+                    sx={{ marginBottom: '8px',marginRight: '40px', marginTop: '8px', padding:'8px' }}
                 >
                     Select Picture for the Article
                     <VisuallyHiddenInput
@@ -129,11 +115,10 @@ export default function UploadPictureForm() {
                 </Button>
                  {fileSize && <Typography variant="body2" sx={{ marginBottom: '16px' }}>Selected file size: {fileSize}</Typography>}
                   
-                {isLoading ? (
-                    <CircularProgress />
-                ) : (
-                    <Button type="submit" variant="contained" color="primary">Upload</Button>
-                )}
+              
+                    <Button sx={{ margin: 'auto' }} type="submit" variant="contained" color="primary" disabled={isLoading} >{isLoading ? (<CircularProgress/>):'Upload'}</Button>
+
+                </Box>
                  
                 </form>
              </Box>
