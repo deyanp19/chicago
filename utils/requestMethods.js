@@ -34,19 +34,6 @@ async function getArticles(id) {
   return result;
 };
 
-async function getArticlePicture(filename) {
-  const options = {
-    method: "GET",
-    headers: {
-      Accept: "*/*",
-      "x-auth-token": localStorage.getItem('authToken')
-    },
-  };
-
-  const result = await fetch(ApiUrl + `/images/uploaded_pi?filename=${filename}`,options);
-  
-  return result;
-}
 
 async function postUpload(data) {
   console.log('deyan',Object.fromEntries(data))
@@ -153,22 +140,7 @@ async function signUpRequest(data) {
 
   return result;
 }
-// async function postRequest(data,endpoint) {
-//     const options = {
-//         method:'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'Accept':'*/*',
-//             'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODAxMzNkZDU3ODliNjM3NTJkNGExYzciLCJpYXQiOjE3NDQ5ODY5Mjd9.uM14JBNf8B8KdWCze6NBWFUPNUQVR5V-14ZYXljGDn8'
-//         },
-//         body:JSON.stringify(data)
-//     }
-//     const result = await fetch(ApiUrl+endpoint,options)
-//     const token = result.headers.get('x-auth-token');
 
-//     return result;
-// }
-//put request
 async function updateRequest(data) {}
 
 //delete request
@@ -185,5 +157,4 @@ export default {
   loginRequest,
   signUpRequest,
   postUpload,
-  getArticlePicture
 };
