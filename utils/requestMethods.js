@@ -43,7 +43,7 @@ async function getArticlePicture(filename) {
     },
   };
 
-  const result = await fetch(ApiUrl + `/images/uploaded_pic?filename=${filename}`,options);
+  const result = await fetch(ApiUrl + `/images/uploaded_pi?filename=${filename}`,options);
   
   return result;
 }
