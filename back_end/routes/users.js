@@ -9,7 +9,6 @@ const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../middleware/validateObjectId');
 const mongoose = require('mongoose');
-const { log } = require('console');
 
 
 router.get('/' , auth, admin, async (req,res) => {

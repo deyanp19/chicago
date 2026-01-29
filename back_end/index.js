@@ -16,15 +16,7 @@ require('./startup/config')();
 require('./startup/validation')();
 require('./startup/prod')(app);
 
-
- 
-
-
-
 //app.use(error);// not calling the function error, just referencing
-
-
-
 const port = process.env.PORT || config.get('PORT');
 
 // Only actually start listening when we are NOT running tests

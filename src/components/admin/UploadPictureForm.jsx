@@ -16,7 +16,11 @@ export default function UploadPictureForm() {
     const { articleFileName, uploadFileName } =useContext(AuthContext);
 
     useEffect(()=>{
-        setImageUrl( `/images/uploaded_pic/${articleFileName}`)
+        if (process.env.NEXT_PUBLIC_ENV === 'development') {
+            setImageUrl( `/images/uploaded_pic/${articleFileName}`);
+        } else {
+            setImageUrl( `/images/${articleFileName}`);
+        }
     },[articleFileName]);
  
     const handleFileChange = (event) => {
