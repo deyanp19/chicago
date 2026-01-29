@@ -7,7 +7,7 @@ import UploadPictureForm from './UploadPictureForm';
 import { useRouter } from "next/router";
 import { AuthContext } from '@/context/AuthContext';
 
-const ArticlePicturePath = process.env.NEXT_PUBLIC_UPLOAD_DIR;
+const ArticlePicturePath = process.env.NEXT_PUBLIC_READ_DIR;
 
 const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
         width: '100%',
