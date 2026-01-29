@@ -3,6 +3,6 @@
     "db":"mongodb://localhost:27017/chicagotours",
     "PORT": 3002,
     "URI":"https://chicagotours.site",
-     "UPLOAD_DIR":"/var/uploads",
-     "READ_DIR":"/images"
+    "UPLOAD_DIR":"/var/uploads",
+    "READ_DIR":"/res"
   }
