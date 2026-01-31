@@ -270,47 +270,46 @@ export function Search() {
           onBlur={handleBlur}
           className={focusedCardIndex === 1 ? 'Mui-focused' : ''}
           >
-            {/* Collapsible Image */}
+          {/* Collapsible Image */}
+          <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
+            <CardMedia
+              component="img"
+              alt={articles[index].tag}
+              image={articles[index].image}
+              sx={{
+                aspectRatio: "16 / 9",
+                borderBottom: "1px solid",
+                borderColor: "divider",
+              }}
+            />
+          </Collapse>
+
+          {/* Card Content */}
+          <StyledCardContent>
+            <Typography gutterBottom variant="caption" component="div">
+              {articles[index]?.tag}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="div">
+              {articles[index]?.title}
+            </Typography>
+            
             <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-              <CardMedia
-                component="img"
-                alt={articles[index].tag}
-                image={articles[index].image}
-                sx={{
-                  aspectRatio: "16 / 9",
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
-                }}
-              />
+              {articles[index] == undefined ? (
+                <Typography>No data available</Typography>  // Fallback UI
+              ) : (
+                articles[index]?.content.split("\n").map((x,descIndex)=>{
+                const item= x
+                return (
+                  <Typography key={descIndex}>
+                  {x}
+                  </Typography>
+                )
+              }))}
             </Collapse>
+          </StyledCardContent>
 
-      {/* Card Content */}
-      <StyledCardContent>
-        <Typography gutterBottom variant="caption" component="div">
-          {articles[index]?.tag}
-        </Typography>
-        <Typography gutterBottom variant="h6" component="div">
-          {articles[index]?.title}
-        </Typography>
-        <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-        <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-          {articles[index] == undefined ? (
-            <Typography>No data available</Typography>  // Fallback UI
-          ) : (
-            articles[index]?.content.split("\n").map((x,descIndex)=>{
-            const item= x
-            return (
-              <List key={descIndex}>
-              {x}
-              </List>
-            )
-          }))}
-        </Collapse>
-        </StyledTypography>
-      </StyledCardContent>
-
-      {/* Author Section */}
-     <Author author={articles[index]?.author || [] } time={dateFormat.formatCST(articles[index]?.dateCreated)}/>
+          {/* Author Section */}
+        <Author author={articles[index]?.author || [] } time={dateFormat.formatCST(articles[index]?.dateCreated)}/>
       </StyledCard>
     )
 

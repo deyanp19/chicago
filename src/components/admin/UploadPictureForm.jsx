@@ -96,7 +96,7 @@ export default function UploadPictureForm() {
                 {errorMessage && <Typography color="error">{errorMessage}</Typography>}   
                 {successMessage && <Typography color="success.main">{successMessage}</Typography>}  
                 {console.log(imageUrl)}
-                {articleFileName  && <img src={imageUrl} alt="Uploaded file-" style={{ maxWidth: '100%', marginTop: '16px' }} />}  
+                {articleFileName  && <img src={imageUrl} alt="Uploaded file" style={{ maxWidth: '100%', marginTop: '16px' }} />}  
          
                 
                 <form onSubmit={handleUpload} enctype="multipart/form-data" sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
